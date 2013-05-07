@@ -67,7 +67,9 @@
     <Compile Include="..\Properties\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="SampleTest.cs" />
+    <Compile Include="Core\ConfigTest.cs" />
+    <Compile Include="Core\EvtArgsTest.cs" />
+    <Compile Include="Core\ScannerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

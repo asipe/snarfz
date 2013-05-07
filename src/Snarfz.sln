@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snarfz.Core", "Snarfz.Core\Snarfz.Core.csproj", "{B9021B60-4220-4512-AA83-84BF4BFADE43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snarfz.UnitTests", "Snarfz.UnitTests\Snarfz.UnitTests.csproj", "{C3DB961D-420F-4D95-BA47-4397DB80FA53}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9021B60-4220-4512-AA83-84BF4BFADE43} = {B9021B60-4220-4512-AA83-84BF4BFADE43}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
