@@ -1,0 +1,9 @@
+src\**\bin
+src\**\obj
+_ReSharper.*
+*.user
+*.suo
+vsdebug
+debug
+test_results
+TestResult.xml
