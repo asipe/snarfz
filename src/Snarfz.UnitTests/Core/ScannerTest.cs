@@ -1,15 +1,19 @@
-﻿using Moq;
+﻿using System.Collections.Generic;
+using Moq;
 using NUnit.Framework;
 using Snarfz.Core;
 using SupaCharge.Core.IOAbstractions;
-using SupaCharge.Testing;
 
 namespace Snarfz.UnitTests.Core {
   [TestFixture]
-  public class ScannerTest : BaseTestCase {
+  public class ScannerTest : SnarfzBaseTestCase {
     [Test]
     public void TestScanDirectoriesOnlyNoSubDirectories() {
       var config = new Config(_Root);
+      var seen = new List<EvtArgs>();
+      config.OnDirectory += (o, a) => seen.Add(a);
+      mScanner.Start(config);
+      AssertEqual(seen, BA(new EvtArgs(_Root)));
     }
 
     [SetUp]

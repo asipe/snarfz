@@ -7,6 +7,7 @@ namespace Snarfz.Core {
     }
 
     public void Start(Config config) {
+      config.HandleDirectory(new EvtArgs(config.Root));
     }
 
     private readonly IDirectory mDirectory;

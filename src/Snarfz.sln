@@ -8,6 +8,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snarfz.UnitTests", "Snarfz.
 		{B9021B60-4220-4512-AA83-84BF4BFADE43} = {B9021B60-4220-4512-AA83-84BF4BFADE43}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{9DD255AF-E466-42B3-BED3-A08B283BF1D3}"
+	ProjectSection(SolutionItems) = preProject
+		..\default.build = ..\default.build
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

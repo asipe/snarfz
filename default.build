@@ -73,6 +73,7 @@
         <include name="SupaCharge.Testing.dll"/>
         <include name="SupaCharge.Core.dll"/>
         <include name="Snarfz.Core.dll"/>
+        <include name="KellermanSoftware.Compare-NET-Objects.dll"/>
       </references>
     </csc>
   </target>
