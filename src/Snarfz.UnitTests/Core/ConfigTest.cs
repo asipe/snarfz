@@ -13,23 +13,15 @@ namespace Snarfz.UnitTests.Core {
     }
 
     [Test]
-    public void TestHandleDirectoryWithNoHandlers() {
-      mConfig.HandleDirectory(null);
-    }
-
-    [Test]
-    public void TestHandleDirectoryWithHandlers() {
+    public void TestOnDirectoryEventHandlersRegistered() {
       var seen = new List<EvtArgs>();
-
-      for (var x = 0; x < 2; ++x)
-        mConfig.OnDirectory += (o, e) => {
-          Assert.That(o, Is.SameAs(mConfig));
-          seen.Add(e);
-        };
-
+      mConfig.OnDirectory += (o, e) => {
+        Assert.That(o, Is.SameAs(mConfig));
+        seen.Add(e);
+      };
       var arg = CA<EvtArgs>();
-      mConfig.HandleDirectory(arg);
-      Assert.That(seen, Is.EqualTo(BA(arg, arg)));
+      mConfig.Handlers.HandleDirectory(arg);
+      Assert.That(seen, Is.EqualTo(BA(arg)));
     }
 
     [SetUp]

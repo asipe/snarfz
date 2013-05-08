@@ -4,16 +4,16 @@ namespace Snarfz.Core {
   public class Config {
     public Config(string root) {
       Root = root;
+      Handlers = new EventHandlers(this);
     }
 
     public string Root{get;private set;}
     public ScanType ScanType{get;set;}
-    public event EventHandler<EvtArgs> OnDirectory;
+    public EventHandlers Handlers{get;private set;}
 
-    public void HandleDirectory(EvtArgs e) {
-      var handler = OnDirectory;
-      if (handler != null)
-        handler(this, e);
+    public event EventHandler<EvtArgs> OnDirectory {
+      add {Handlers.OnDirectory += value;}
+      remove {Handlers.OnDirectory -= value;}
     }
   }
 }

@@ -46,6 +46,7 @@
     </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="EventHandlers.cs" />
     <Compile Include="EvtArgs.cs" />
     <Compile Include="Scanner.cs" />
   </ItemGroup>
