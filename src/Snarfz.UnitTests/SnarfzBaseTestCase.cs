@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 using System.Linq;
 using KellermanSoftware.CompareNetObjects;
 using NUnit.Framework;
@@ -17,6 +18,17 @@ namespace Snarfz.UnitTests {
         expected = ((IEnumerable)expected).Cast<object>().ToArray();
       }
       return _ObjectComparer.Compare(actual, expected);
+    }
+
+    protected string[] BuildPaths(string root, int number) {
+      return Enumerable
+        .Range(0, number)
+        .Select(x => Path.Combine(root, "dir" + CA<int>()))
+        .ToArray();
+    }
+
+    static SnarfzBaseTestCase() {
+      _ObjectComparer.MaxDifferences = 10;
     }
 
     private static readonly CompareObjects _ObjectComparer = new CompareObjects();

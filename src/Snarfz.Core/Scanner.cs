@@ -7,7 +7,13 @@ namespace Snarfz.Core {
     }
 
     public void Start(Config config) {
-      config.HandleDirectory(new EvtArgs(config.Root));
+      ProcessDirectory(config, config.Root);
+    }
+
+    private void ProcessDirectory(Config config, string current) {
+      config.HandleDirectory(new EvtArgs(current));
+      foreach (var dir in mDirectory.GetDirectories(current))
+        ProcessDirectory(config, dir);
     }
 
     private readonly IDirectory mDirectory;
