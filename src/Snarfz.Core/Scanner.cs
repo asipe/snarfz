@@ -10,9 +10,9 @@ namespace Snarfz.Core {
       ProcessDirectory(config.Handlers, config.Root);
     }
 
-    private void ProcessDirectory(EventHandlers handlers, string current) {
-      handlers.HandleDirectory(new ScanEventArgs(current));
-      foreach (var dir in mDirectory.GetDirectories(current))
+    private void ProcessDirectory(EventHandlers handlers, string currentDir) {
+      handlers.HandleDirectory(new ScanEventArgs(currentDir));
+      foreach (var dir in mDirectory.GetDirectories(currentDir))
         ProcessDirectory(handlers, dir);
     }
 

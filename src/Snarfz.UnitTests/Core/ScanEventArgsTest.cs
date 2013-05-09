@@ -8,7 +8,7 @@ namespace Snarfz.UnitTests.Core {
     [Test]
     public void TestDefaults() {
       var args = new ScanEventArgs("apath");
-      Assert.That(args.Directory, Is.EqualTo("apath"));
+      Assert.That(args.Path, Is.EqualTo("apath"));
     }
   }
 }
