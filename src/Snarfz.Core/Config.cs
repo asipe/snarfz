@@ -10,6 +10,7 @@ namespace Snarfz.Core {
     public string Root{get;private set;}
     public ScanType ScanType{get;set;}
     public EventHandlers Handlers{get;private set;}
+    public ScanErrorMode ScanErrorMode{get;set;}
 
     public event EventHandler<ScanEventArgs> OnDirectory {
       add {Handlers.OnDirectory += value;}
