@@ -1,8 +1,8 @@
 ﻿using System;
 
 namespace Snarfz.Core {
-  public class ScanEventArgs : EventArgs {
-    public ScanEventArgs(string path) {
+  public class DirectoryVisitEventArgs : EventArgs {
+    public DirectoryVisitEventArgs(string path) {
       Path = path;
     }
 

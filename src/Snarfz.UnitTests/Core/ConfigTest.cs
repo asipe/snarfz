@@ -15,12 +15,12 @@ namespace Snarfz.UnitTests.Core {
 
     [Test]
     public void TestOnDirectoryEventHandlersRegistered() {
-      var seen = new List<ScanEventArgs>();
+      var seen = new List<DirectoryVisitEventArgs>();
       mConfig.OnDirectory += (o, e) => {
         Assert.That(o, Is.SameAs(mConfig));
         seen.Add(e);
       };
-      var arg = CA<ScanEventArgs>();
+      var arg = CA<DirectoryVisitEventArgs>();
       mConfig.Handlers.HandleDirectory(arg);
       Assert.That(seen, Is.EqualTo(BA(arg)));
     }

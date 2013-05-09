@@ -48,7 +48,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ScanError.cs" />
     <Compile Include="EventHandlers.cs" />
-    <Compile Include="ScanEventArgs.cs" />
+    <Compile Include="DirectoryVisitEventArgs.cs" />
     <Compile Include="ScanException.cs" />
     <Compile Include="Scanner.cs" />
     <Compile Include="SnarfzException.cs" />
