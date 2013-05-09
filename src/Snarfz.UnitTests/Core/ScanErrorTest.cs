@@ -1,11 +1,10 @@
 ﻿using System;
 using NUnit.Framework;
 using Snarfz.Core;
-using SupaCharge.Testing;
 
 namespace Snarfz.UnitTests.Core {
   [TestFixture]
-  public class ScanErrorTest : BaseTestCase {
+  public class ScanErrorTest : SnarfzBaseTestCase {
     [Test]
     public void TestHandleThrowsWhenModeIsThrow() {
       mConfig.ScanErrorMode = ScanErrorMode.Throw;
@@ -20,6 +19,30 @@ namespace Snarfz.UnitTests.Core {
       mConfig.ScanErrorMode = ScanErrorMode.Ignore;
       var original = new Exception("test ex");
       mError.Handle(original);
+    }
+
+    [Test]
+    public void TestHandleAsksHandlersWhenModeIsAskAndHandlerDoesNotThrow() {
+      var original = new Exception("test ex");
+      var handlerCalled = false;
+      mConfig.ScanErrorMode = ScanErrorMode.Ask;
+      mConfig.OnError += (o, a) => {
+        AssertEqual(a, new ScanErrorEventArgs("", original));
+        handlerCalled = true;
+      };
+      mError.Handle(original);
+      Assert.That(handlerCalled, Is.True);
+    }
+
+    [Test]
+    public void TestHandleAsksHandlersWhenModeIsAskedAndResultIsThrow() {
+      var original = new Exception("test ex 1");
+      mConfig.ScanErrorMode = ScanErrorMode.Ask;
+      mConfig.OnError += (o, a) => {
+        AssertEqual(a, new ScanErrorEventArgs("", original));
+        throw new InvalidOperationException("test ex 2");
+      };
+      Assert.Throws<InvalidOperationException>(() => mError.Handle(original));
     }
 
     [SetUp]

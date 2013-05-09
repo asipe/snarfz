@@ -26,6 +26,26 @@ namespace Snarfz.UnitTests.Core {
       Assert.That(seen, Is.EqualTo(BA(arg, arg)));
     }
 
+    [Test]
+    public void TestHandleError() {
+      mHandlers.HandleError(null);
+    }
+
+    [Test]
+    public void TestHandleErrorWithHandlers() {
+      var seen = new List<ScanErrorEventArgs>();
+
+      for (var x = 0; x < 2; ++x)
+        mHandlers.OnError += (o, e) => {
+          Assert.That(o, Is.SameAs(mConfig));
+          seen.Add(e);
+        };
+
+      var arg = CA<ScanErrorEventArgs>();
+      mHandlers.HandleError(arg);
+      Assert.That(seen, Is.EqualTo(BA(arg, arg)));
+    }
+
     [SetUp]
     public void DoSetup() {
       mConfig = new Config("");

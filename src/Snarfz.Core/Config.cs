@@ -16,5 +16,10 @@ namespace Snarfz.Core {
       add {Handlers.OnDirectory += value;}
       remove {Handlers.OnDirectory -= value;}
     }
+
+    public event EventHandler<ScanErrorEventArgs> OnError {
+      add {Handlers.OnError += value;}
+      remove {Handlers.OnError -= value;}
+    }
   }
 }

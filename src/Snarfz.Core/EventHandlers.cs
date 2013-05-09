@@ -7,9 +7,16 @@ namespace Snarfz.Core {
     }
 
     public event EventHandler<DirectoryVisitEventArgs> OnDirectory;
+    public event EventHandler<ScanErrorEventArgs> OnError;
 
     public void HandleDirectory(DirectoryVisitEventArgs args) {
       var handler = OnDirectory;
+      if (handler != null)
+        handler(mConfig, args);
+    }
+
+    public void HandleError(ScanErrorEventArgs args) {
+      var handler = OnError;
       if (handler != null)
         handler(mConfig, args);
     }
