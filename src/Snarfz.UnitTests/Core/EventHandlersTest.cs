@@ -13,7 +13,7 @@ namespace Snarfz.UnitTests.Core {
 
     [Test]
     public void TestHandleDirectoryWithHandlers() {
-      var seen = new List<Snarfz.Core.ScanEventArgs>();
+      var seen = new List<ScanEventArgs>();
 
       for (var x = 0; x < 2; ++x)
         mHandlers.OnDirectory += (o, e) => {
@@ -21,7 +21,7 @@ namespace Snarfz.UnitTests.Core {
           seen.Add(e);
         };
 
-      var arg = CA<Snarfz.Core.ScanEventArgs>();
+      var arg = CA<ScanEventArgs>();
       mHandlers.HandleDirectory(arg);
       Assert.That(seen, Is.EqualTo(BA(arg, arg)));
     }

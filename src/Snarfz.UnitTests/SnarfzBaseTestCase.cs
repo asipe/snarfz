@@ -8,6 +8,10 @@ using SupaCharge.Testing;
 namespace Snarfz.UnitTests {
   [TestFixture]
   public abstract class SnarfzBaseTestCase : BaseTestCase {
+    static SnarfzBaseTestCase() {
+      _ObjectComparer.MaxDifferences = 10;
+    }
+
     protected void AssertEqual(object actual, object expected) {
       Assert.That(AreEqual(actual, expected), Is.True, _ObjectComparer.DifferencesString);
     }
@@ -25,10 +29,6 @@ namespace Snarfz.UnitTests {
         .Range(0, number)
         .Select(x => Path.Combine(root, "dir" + CA<int>()))
         .ToArray();
-    }
-
-    static SnarfzBaseTestCase() {
-      _ObjectComparer.MaxDifferences = 10;
     }
 
     private static readonly CompareObjects _ObjectComparer = new CompareObjects();

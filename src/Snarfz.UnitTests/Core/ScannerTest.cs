@@ -11,7 +11,7 @@ namespace Snarfz.UnitTests.Core {
     public void TestScanDirectoriesOnlyNoSubDirectories() {
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(BA<string>());
       mScanner.Start(mConfig);
-      AssertEqual(mSeen, BA(new Snarfz.Core.ScanEventArgs(_Root)));
+      AssertEqual(mSeen, BA(new ScanEventArgs(_Root)));
     }
 
     [Test]
@@ -23,10 +23,10 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(dirs[1])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(dirs[2])).Returns(BA<string>());
       mScanner.Start(mConfig);
-      AssertEqual(mSeen, BA(new Snarfz.Core.ScanEventArgs(_Root),
-                            new Snarfz.Core.ScanEventArgs(dirs[0]),
-                            new Snarfz.Core.ScanEventArgs(dirs[1]),
-                            new Snarfz.Core.ScanEventArgs(dirs[2])));
+      AssertEqual(mSeen, BA(new ScanEventArgs(_Root),
+                            new ScanEventArgs(dirs[0]),
+                            new ScanEventArgs(dirs[1]),
+                            new ScanEventArgs(dirs[2])));
     }
 
     [Test]
@@ -42,17 +42,17 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
       mScanner.Start(mConfig);
-      AssertEqual(mSeen, BA(new Snarfz.Core.ScanEventArgs(_Root),
-                            new Snarfz.Core.ScanEventArgs(rootSubDirs[0]),
-                            new Snarfz.Core.ScanEventArgs(subDir0SubDirs[0]),
-                            new Snarfz.Core.ScanEventArgs(rootSubDirs[1]),
-                            new Snarfz.Core.ScanEventArgs(subDir1SubDirs[0]),
-                            new Snarfz.Core.ScanEventArgs(subDir1SubDirs[1])));
+      AssertEqual(mSeen, BA(new ScanEventArgs(_Root),
+                            new ScanEventArgs(rootSubDirs[0]),
+                            new ScanEventArgs(subDir0SubDirs[0]),
+                            new ScanEventArgs(rootSubDirs[1]),
+                            new ScanEventArgs(subDir1SubDirs[0]),
+                            new ScanEventArgs(subDir1SubDirs[1])));
     }
 
     [SetUp]
     public void DoSetup() {
-      mSeen = new List<Snarfz.Core.ScanEventArgs>();
+      mSeen = new List<ScanEventArgs>();
       mConfig = new Config(_Root);
       mConfig.OnDirectory += (o, a) => mSeen.Add(a);
       mDirectory = Mok<IDirectory>();
@@ -62,7 +62,7 @@ namespace Snarfz.UnitTests.Core {
     private Mock<IDirectory> mDirectory;
     private Scanner mScanner;
     private Config mConfig;
-    private List<Snarfz.Core.ScanEventArgs> mSeen;
+    private List<ScanEventArgs> mSeen;
     private const string _Root = @"c:\myfolder";
   }
 }
