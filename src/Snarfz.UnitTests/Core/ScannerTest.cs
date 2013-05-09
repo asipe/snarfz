@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using Snarfz.Core;
@@ -45,6 +46,43 @@ namespace Snarfz.UnitTests.Core {
       AssertEqual(mSeen, BA(new ScanEventArgs(_Root),
                             new ScanEventArgs(rootSubDirs[0]),
                             new ScanEventArgs(subDir0SubDirs[0]),
+                            new ScanEventArgs(rootSubDirs[1]),
+                            new ScanEventArgs(subDir1SubDirs[0]),
+                            new ScanEventArgs(subDir1SubDirs[1])));
+    }
+
+    [Test]
+    public void TestScanDirectorisOnlyWithErrorDuringScanThrowsWhenScanErrorModeIsThrow() {
+      var ex = new Exception("test ex");
+      var rootSubDirs = BuildPaths(_Root, 2);
+      var subDir0SubDirs = BuildPaths(rootSubDirs[0], 1);
+
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
+      mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Returns(subDir0SubDirs);
+      mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Throws(ex);
+      mDirectory.Setup(d => d.GetDirectories(subDir0SubDirs[0])).Returns(BA<string>());
+      Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
+      AssertEqual(mSeen, BA(new ScanEventArgs(_Root),
+                            new ScanEventArgs(rootSubDirs[0]),
+                            new ScanEventArgs(subDir0SubDirs[0]),
+                            new ScanEventArgs(rootSubDirs[1])));
+    }
+
+    [Test]
+    public void TestScanDirectoriesOnlyWithErrorDuringScanSilencesAndPrunesWhenScanErrorModeIsSilence() {
+      mConfig.ScanErrorMode = ScanErrorMode.Ignore;
+      var ex = new Exception("test ex");
+      var rootSubDirs = BuildPaths(_Root, 2);
+      var subDir1SubDirs = BuildPaths(rootSubDirs[1], 2);
+
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
+      mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Throws(ex);
+      mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Returns(subDir1SubDirs);
+      mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
+      mScanner.Start(mConfig);
+      AssertEqual(mSeen, BA(new ScanEventArgs(_Root),
+                            new ScanEventArgs(rootSubDirs[0]),
                             new ScanEventArgs(rootSubDirs[1]),
                             new ScanEventArgs(subDir1SubDirs[0]),
                             new ScanEventArgs(subDir1SubDirs[1])));

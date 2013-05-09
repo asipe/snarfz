@@ -46,9 +46,12 @@
     </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="ScanError.cs" />
     <Compile Include="EventHandlers.cs" />
     <Compile Include="ScanEventArgs.cs" />
+    <Compile Include="ScanException.cs" />
     <Compile Include="Scanner.cs" />
+    <Compile Include="SnarfzException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

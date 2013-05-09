@@ -10,7 +10,7 @@ namespace Snarfz.UnitTests.Core {
     public void TestDefaults() {
       Assert.That(mConfig.Root, Is.EqualTo("apath"));
       Assert.That(mConfig.ScanType, Is.EqualTo(ScanType.DirectoryOnly));
-      Assert.That(mConfig.ScanErrorMode, Is.EqualTo(ScanErrorMode.Halt));
+      Assert.That(mConfig.ScanErrorMode, Is.EqualTo(ScanErrorMode.Throw));
     }
 
     [Test]

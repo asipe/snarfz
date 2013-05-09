@@ -4,8 +4,7 @@
   }
 
   public enum ScanErrorMode {
-    Halt,
-    Ignore,
-    Ask
+    Throw,
+    Ignore
   }
 }
