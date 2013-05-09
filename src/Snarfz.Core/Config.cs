@@ -11,7 +11,7 @@ namespace Snarfz.Core {
     public ScanType ScanType{get;set;}
     public EventHandlers Handlers{get;private set;}
 
-    public event EventHandler<EvtArgs> OnDirectory {
+    public event EventHandler<ScanEventArgs> OnDirectory {
       add {Handlers.OnDirectory += value;}
       remove {Handlers.OnDirectory -= value;}
     }

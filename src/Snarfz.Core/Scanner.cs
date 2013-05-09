@@ -11,7 +11,7 @@ namespace Snarfz.Core {
     }
 
     private void ProcessDirectory(EventHandlers handlers, string current) {
-      handlers.HandleDirectory(new EvtArgs(current));
+      handlers.HandleDirectory(new ScanEventArgs(current));
       foreach (var dir in mDirectory.GetDirectories(current))
         ProcessDirectory(handlers, dir);
     }

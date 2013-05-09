@@ -74,7 +74,7 @@
     </Compile>
     <Compile Include="Core\ConfigTest.cs" />
     <Compile Include="Core\EventHandlersTest.cs" />
-    <Compile Include="Core\EvtArgsTest.cs" />
+    <Compile Include="Core\ScanEventArgsTest.cs" />
     <Compile Include="Core\ScannerTest.cs" />
     <Compile Include="SnarfzBaseTestCase.cs" />
   </ItemGroup>

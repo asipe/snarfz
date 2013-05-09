@@ -6,9 +6,9 @@ namespace Snarfz.Core {
       mConfig = config;
     }
 
-    public event EventHandler<EvtArgs> OnDirectory;
+    public event EventHandler<ScanEventArgs> OnDirectory;
 
-    public void HandleDirectory(EvtArgs args) {
+    public void HandleDirectory(ScanEventArgs args) {
       var handler = OnDirectory;
       if (handler != null)
         handler(mConfig, args);

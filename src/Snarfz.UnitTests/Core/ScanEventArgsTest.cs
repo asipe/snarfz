@@ -4,10 +4,10 @@ using SupaCharge.Testing;
 
 namespace Snarfz.UnitTests.Core {
   [TestFixture]
-  public class EvtArgsTest : BaseTestCase {
+  public class ScanEventArgsTest : BaseTestCase {
     [Test]
     public void TestDefaults() {
-      var args = new EvtArgs("apath");
+      var args = new ScanEventArgs("apath");
       Assert.That(args.Directory, Is.EqualTo("apath"));
     }
   }
