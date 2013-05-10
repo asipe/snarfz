@@ -6,10 +6,10 @@ namespace Snarfz.Core {
       mConfig = config;
     }
 
-    public void Handle(Exception exception) {
+    public void Handle(string currentDir, Exception exception) {
       switch (mConfig.ScanErrorMode) {
         case ScanErrorMode.Ask:
-          AskHandlers(exception);
+          AskHandlers(currentDir, exception);
           break;
         case ScanErrorMode.Throw:
           throw new ScanException(exception.Message, exception);
@@ -18,8 +18,8 @@ namespace Snarfz.Core {
       }
     }
 
-    private void AskHandlers(Exception exception) {
-      mConfig.Handlers.HandleError(new ScanErrorEventArgs("", exception));
+    private void AskHandlers(string currentDir, Exception exception) {
+      mConfig.Handlers.HandleError(new ScanErrorEventArgs(currentDir, exception));
     }
 
     private readonly Config mConfig;

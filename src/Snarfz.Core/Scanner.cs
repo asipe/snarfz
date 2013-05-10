@@ -23,7 +23,7 @@ namespace Snarfz.Core {
       try {
         return mDirectory.GetDirectories(currentDir);
       } catch (Exception e) {
-        new ScanError(config).Handle(e);
+        new ScanError(config).Handle(currentDir, e);
       }
       return Enumerable.Empty<string>();
     }
