@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
+
+using NUnit.Framework;
 using Snarfz.Core;
 using SupaCharge.Testing;
 

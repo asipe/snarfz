@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information.
+
+using System.Collections.Generic;
 using NUnit.Framework;
 using Snarfz.Core;
 using SupaCharge.Testing;
@@ -24,7 +26,7 @@ namespace Snarfz.UnitTests.Core {
       mConfig.Handlers.HandleDirectory(arg);
       Assert.That(seen, Is.EqualTo(BA(arg)));
     }
-    
+
     [Test]
     public void TestOnErrorEventHandlersRegistered() {
       var seen = new List<ScanErrorEventArgs>();
