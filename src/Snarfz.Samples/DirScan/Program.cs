@@ -18,11 +18,12 @@ namespace DirScan {
 
       var config = new Config(root) {ScanErrorMode = ScanErrorMode.Ask};
       config.OnError += (o, a) => {
-        Console.WriteLine("!!! ERROR: " + a.Exception.Message);
+        Console.WriteLine("!!! ERROR DURING SCAN: " + a.Exception.Message);
+        Console.WriteLine("Press Enter To Continue Scan");
         Console.ReadLine();
       };
       config.OnDirectory += (o, a) => Console.WriteLine(a.Path);
-      new Scanner(new DotNetDirectory()).Start(config);
+      new Scanner(new DotNetDirectory(), new ScanErrorHandler(config)).Start(config);
     }
   }
 }
