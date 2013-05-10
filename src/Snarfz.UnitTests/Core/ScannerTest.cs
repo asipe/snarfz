@@ -52,7 +52,7 @@ namespace Snarfz.UnitTests.Core {
     }
 
     [Test]
-    public void TestScanDirectorisOnlyWithErrorDuringScanThrowsWhenScanErrorModeIsThrow() {
+    public void TestScanDirectorisOnlyWithErrorDuringScanThrowsWhenScanErrorHandlerThrows() {
       var ex = new Exception("test ex");
       var rootSubDirs = BuildPaths(_Root, 2);
       var subDir0SubDirs = BuildPaths(rootSubDirs[0], 1);
@@ -61,6 +61,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Returns(subDir0SubDirs);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Throws(ex);
       mDirectory.Setup(d => d.GetDirectories(subDir0SubDirs[0])).Returns(BA<string>());
+      mErrorHandler.Setup(h => h.Handle(rootSubDirs[1], ex)).Throws<ScanException>();
       Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
       AssertEqual(mSeen, BA(new DirectoryVisitEventArgs(_Root),
                             new DirectoryVisitEventArgs(rootSubDirs[0]),
@@ -69,8 +70,7 @@ namespace Snarfz.UnitTests.Core {
     }
 
     [Test]
-    public void TestScanDirectoriesOnlyWithErrorDuringScanSilencesAndPrunesWhenScanErrorModeIsSilence() {
-      mConfig.ScanErrorMode = ScanErrorMode.Ignore;
+    public void TestScanDirectoriesOnlyWithErrorDuringScanPrunesWhenScanErrorHandlerDoesNotThrow() {
       var ex = new Exception("test ex");
       var rootSubDirs = BuildPaths(_Root, 2);
       var subDir1SubDirs = BuildPaths(rootSubDirs[1], 2);
@@ -80,6 +80,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Returns(subDir1SubDirs);
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
+      mErrorHandler.Setup(h => h.Handle(rootSubDirs[0], ex));
       mScanner.Start(mConfig);
       AssertEqual(mSeen, BA(new DirectoryVisitEventArgs(_Root),
                             new DirectoryVisitEventArgs(rootSubDirs[0]),
@@ -94,13 +95,15 @@ namespace Snarfz.UnitTests.Core {
       mConfig = new Config(_Root);
       mConfig.OnDirectory += (o, a) => mSeen.Add(a);
       mDirectory = Mok<IDirectory>();
-      mScanner = new Scanner(mDirectory.Object);
+      mErrorHandler = Mok<IScanErrorHandler>();
+      mScanner = new Scanner(mDirectory.Object, mErrorHandler.Object);
     }
 
     private Mock<IDirectory> mDirectory;
     private Scanner mScanner;
     private Config mConfig;
     private List<DirectoryVisitEventArgs> mSeen;
+    private Mock<IScanErrorHandler> mErrorHandler;
     private const string _Root = @"c:\myfolder";
   }
 }

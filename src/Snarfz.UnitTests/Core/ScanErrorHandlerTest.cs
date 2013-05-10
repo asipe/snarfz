@@ -4,12 +4,12 @@ using Snarfz.Core;
 
 namespace Snarfz.UnitTests.Core {
   [TestFixture]
-  public class ScanErrorTest : SnarfzBaseTestCase {
+  public class ScanErrorHandlerTest : SnarfzBaseTestCase {
     [Test]
     public void TestHandleThrowsWhenModeIsThrow() {
       mConfig.ScanErrorMode = ScanErrorMode.Throw;
       var original = new Exception("test ex");
-      var actual = Assert.Throws<ScanException>(() => mError.Handle("", original));
+      var actual = Assert.Throws<ScanException>(() => mHandler.Handle("", original));
       Assert.That(actual.InnerException, Is.EqualTo(original));
       Assert.That(actual.Message, Is.EqualTo("test ex"));
     }
@@ -18,7 +18,7 @@ namespace Snarfz.UnitTests.Core {
     public void TestHandleSilencesWhenModeIsSilence() {
       mConfig.ScanErrorMode = ScanErrorMode.Ignore;
       var original = new Exception("test ex");
-      mError.Handle("", original);
+      mHandler.Handle("", original);
     }
 
     [Test]
@@ -30,7 +30,7 @@ namespace Snarfz.UnitTests.Core {
         AssertEqual(a, new ScanErrorEventArgs(@"some\path", original));
         handlerCalled = true;
       };
-      mError.Handle(@"some\path", original);
+      mHandler.Handle(@"some\path", original);
       Assert.That(handlerCalled, Is.True);
     }
 
@@ -42,16 +42,16 @@ namespace Snarfz.UnitTests.Core {
         AssertEqual(a, new ScanErrorEventArgs(@"some\path", original));
         throw new InvalidOperationException("test ex 2");
       };
-      Assert.Throws<InvalidOperationException>(() => mError.Handle(@"some\path", original));
+      Assert.Throws<InvalidOperationException>(() => mHandler.Handle(@"some\path", original));
     }
 
     [SetUp]
     public void DoSetup() {
       mConfig = CA<Config>();
-      mError = new ScanError(mConfig);
+      mHandler = new ScanErrorHandler(mConfig);
     }
 
     private Config mConfig;
-    private ScanError mError;
+    private ScanErrorHandler mHandler;
   }
 }

@@ -5,8 +5,9 @@ using SupaCharge.Core.IOAbstractions;
 
 namespace Snarfz.Core {
   public class Scanner {
-    public Scanner(IDirectory directory) {
+    public Scanner(IDirectory directory, IScanErrorHandler errorHandler) {
       mDirectory = directory;
+      mErrorHandler = errorHandler;
     }
 
     public void Start(Config config) {
@@ -15,19 +16,20 @@ namespace Snarfz.Core {
 
     private void ProcessDirectory(Config config, string currentDir) {
       config.Handlers.HandleDirectory(new DirectoryVisitEventArgs(currentDir));
-      foreach (var dir in GetSubDirectories(config, currentDir))
+      foreach (var dir in GetSubDirectories(currentDir))
         ProcessDirectory(config, dir);
     }
 
-    private IEnumerable<string> GetSubDirectories(Config config, string currentDir) {
+    private IEnumerable<string> GetSubDirectories(string currentDir) {
       try {
         return mDirectory.GetDirectories(currentDir);
       } catch (Exception e) {
-        new ScanError(config).Handle(currentDir, e);
+        mErrorHandler.Handle(currentDir, e);
       }
       return Enumerable.Empty<string>();
     }
 
     private readonly IDirectory mDirectory;
+    private readonly IScanErrorHandler mErrorHandler;
   }
 }

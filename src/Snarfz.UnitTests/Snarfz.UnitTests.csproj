@@ -75,7 +75,7 @@
     <Compile Include="Core\ConfigTest.cs" />
     <Compile Include="Core\EventHandlersTest.cs" />
     <Compile Include="Core\ScanErrorEventArgsTest.cs" />
-    <Compile Include="Core\ScanErrorTest.cs" />
+    <Compile Include="Core\ScanErrorHandlerTest.cs" />
     <Compile Include="Core\DirectoryVisitEventArgsTest.cs" />
     <Compile Include="Core\ScannerTest.cs" />
     <Compile Include="SnarfzBaseTestCase.cs" />

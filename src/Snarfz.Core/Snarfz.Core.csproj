@@ -46,7 +46,8 @@
     </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="ScanError.cs" />
+    <Compile Include="IScanErrorHandler.cs" />
+    <Compile Include="ScanErrorHandler.cs" />
     <Compile Include="EventHandlers.cs" />
     <Compile Include="DirectoryVisitEventArgs.cs" />
     <Compile Include="ScanErrorEventArgs.cs" />

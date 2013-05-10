@@ -1,8 +1,8 @@
 ﻿using System;
 
 namespace Snarfz.Core {
-  public class ScanError {
-    public ScanError(Config config) {
+  public class ScanErrorHandler : IScanErrorHandler {
+    public ScanErrorHandler(Config config) {
       mConfig = config;
     }
 
