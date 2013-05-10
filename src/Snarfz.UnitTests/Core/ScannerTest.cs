@@ -21,7 +21,7 @@ namespace Snarfz.UnitTests.Core {
     [Test]
     public void TestScanDirectoriesOnlyWithSubDirectories() {
       mConfig.ScanType = ScanType.DirectoriesOnly;
-      var dirs = BuildPaths(_Root, 3);
+      var dirs = BuildDirPaths(_Root, 3);
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(dirs);
       mDirectory.Setup(d => d.GetDirectories(dirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(dirs[1])).Returns(BA<string>());
@@ -36,9 +36,9 @@ namespace Snarfz.UnitTests.Core {
     [Test]
     public void TestScanDirectoriesOnlyWithMultipleSubDirectories() {
       mConfig.ScanType = ScanType.DirectoriesOnly;
-      var rootSubDirs = BuildPaths(_Root, 2);
-      var subDir0SubDirs = BuildPaths(rootSubDirs[0], 1);
-      var subDir1SubDirs = BuildPaths(rootSubDirs[1], 2);
+      var rootSubDirs = BuildDirPaths(_Root, 2);
+      var subDir0SubDirs = BuildDirPaths(rootSubDirs[0], 1);
+      var subDir1SubDirs = BuildDirPaths(rootSubDirs[1], 2);
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Returns(subDir0SubDirs);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Returns(subDir1SubDirs);
@@ -58,8 +58,8 @@ namespace Snarfz.UnitTests.Core {
     public void TestScanDirectorisOnlyWithErrorDuringScanThrowsWhenScanErrorHandlerThrows() {
       mConfig.ScanType = ScanType.DirectoriesOnly;
       var ex = new Exception("test ex");
-      var rootSubDirs = BuildPaths(_Root, 2);
-      var subDir0SubDirs = BuildPaths(rootSubDirs[0], 1);
+      var rootSubDirs = BuildDirPaths(_Root, 2);
+      var subDir0SubDirs = BuildDirPaths(rootSubDirs[0], 1);
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Returns(subDir0SubDirs);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Throws(ex);
@@ -76,8 +76,8 @@ namespace Snarfz.UnitTests.Core {
     public void TestScanDirectoriesOnlyWithErrorDuringScanPrunesWhenScanErrorHandlerDoesNotThrow() {
       mConfig.ScanType = ScanType.DirectoriesOnly;
       var ex = new Exception("test ex");
-      var rootSubDirs = BuildPaths(_Root, 2);
-      var subDir1SubDirs = BuildPaths(rootSubDirs[1], 2);
+      var rootSubDirs = BuildDirPaths(_Root, 2);
+      var subDir1SubDirs = BuildDirPaths(rootSubDirs[1], 2);
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Throws(ex);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Returns(subDir1SubDirs);

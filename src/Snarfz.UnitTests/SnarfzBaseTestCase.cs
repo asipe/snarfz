@@ -26,10 +26,18 @@ namespace Snarfz.UnitTests {
       return _ObjectComparer.Compare(actual, expected);
     }
 
-    protected string[] BuildPaths(string root, int number) {
+    protected string[] BuildDirPaths(string root, int number) {
+      return BuildPaths(root, number, "dir{0}");
+    }
+
+    protected string[] BuildFilePaths(string root, int number) {
+      return BuildPaths(root, number, "file{0}.txt");
+    }
+
+    private string[] BuildPaths(string root, int number, string mask) {
       return Enumerable
         .Range(0, number)
-        .Select(x => Path.Combine(root, "dir" + CA<int>()))
+        .Select(x => Path.Combine(root, string.Format(mask, CA<int>())))
         .ToArray();
     }
 
