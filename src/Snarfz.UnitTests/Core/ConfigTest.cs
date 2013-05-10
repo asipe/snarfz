@@ -11,7 +11,7 @@ namespace Snarfz.UnitTests.Core {
     [Test]
     public void TestDefaults() {
       Assert.That(mConfig.Root, Is.EqualTo("apath"));
-      Assert.That(mConfig.ScanType, Is.EqualTo(ScanType.DirectoryOnly));
+      Assert.That(mConfig.ScanType, Is.EqualTo(ScanType.All));
       Assert.That(mConfig.ScanErrorMode, Is.EqualTo(ScanErrorMode.Throw));
     }
 

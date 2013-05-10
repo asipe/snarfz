@@ -2,7 +2,9 @@
 
 namespace Snarfz.Core {
   public enum ScanType {
-    DirectoryOnly
+    All,
+    DirectoriesOnly,
+    FilesOnly
   }
 
   public enum ScanErrorMode {
