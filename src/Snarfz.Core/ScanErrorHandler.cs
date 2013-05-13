@@ -16,7 +16,7 @@ namespace Snarfz.Core {
       }
     }
 
-    private void AskHandlers(Config config, string currentDir, Exception exception) {
+    private static void AskHandlers(Config config, string currentDir, Exception exception) {
       config.Handlers.HandleError(new ScanErrorEventArgs(currentDir, exception));
     }
   }
