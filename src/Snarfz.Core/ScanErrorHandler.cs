@@ -4,10 +4,10 @@ using System;
 
 namespace Snarfz.Core {
   public class ScanErrorHandler : IScanErrorHandler {
-    public void Handle(Config config, string currentDir, Exception exception) {
+    public void Handle(Config config, string currentPath, Exception exception) {
       switch (config.ScanErrorMode) {
         case ScanErrorMode.Ask:
-          AskHandlers(config, currentDir, exception);
+          AskHandlers(config, currentPath, exception);
           break;
         case ScanErrorMode.Throw:
           throw new ScanException(exception.Message, exception);
@@ -16,8 +16,8 @@ namespace Snarfz.Core {
       }
     }
 
-    private static void AskHandlers(Config config, string currentDir, Exception exception) {
-      config.Handlers.HandleError(new ScanErrorEventArgs(currentDir, exception));
+    private static void AskHandlers(Config config, string currentPath, Exception exception) {
+      config.Handlers.HandleError(new ScanErrorEventArgs(currentPath, exception));
     }
   }
 }

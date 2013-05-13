@@ -4,6 +4,6 @@ using System;
 
 namespace Snarfz.Core {
   public interface IScanErrorHandler {
-    void Handle(Config config, string currentDir, Exception exception);
+    void Handle(Config config, string currentPath, Exception exception);
   }
 }
