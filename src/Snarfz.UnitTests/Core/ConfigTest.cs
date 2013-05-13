@@ -28,6 +28,18 @@ namespace Snarfz.UnitTests.Core {
     }
 
     [Test]
+    public void TestOnFileEventHandlersRegistered() {
+      var seen = new List<FileVisitEventArgs>();
+      mConfig.OnFile += (o, e) => {
+        Assert.That(o, Is.SameAs(mConfig));
+        seen.Add(e);
+      };
+      var arg = CA<FileVisitEventArgs>();
+      mConfig.Handlers.HandleFile(arg);
+      Assert.That(seen, Is.EqualTo(BA(arg)));
+    }
+
+    [Test]
     public void TestOnErrorEventHandlersRegistered() {
       var seen = new List<ScanErrorEventArgs>();
       mConfig.OnError += (o, e) => {

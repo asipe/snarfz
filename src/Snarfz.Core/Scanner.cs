@@ -18,13 +18,32 @@ namespace Snarfz.Core {
 
     private void ProcessDirectory(Config config, string currentDir) {
       config.Handlers.HandleDirectory(new DirectoryVisitEventArgs(currentDir));
+      ProcessFilesForDir(config, currentDir);
+      ProcessSubDirectoriesForDir(config, currentDir);
+    }
+
+    private void ProcessSubDirectoriesForDir(Config config, string currentDir) {
       foreach (var dir in GetSubDirectories(config, currentDir))
         ProcessDirectory(config, dir);
     }
 
+    private void ProcessFilesForDir(Config config, string dir) {
+      if (config.ScanType == ScanType.All)
+        foreach (var file in GetFile(config, dir))
+          config.Handlers.HandleFile(new FileVisitEventArgs(file));
+    }
+
+    private IEnumerable<string> GetFile(Config config, string currentDir) {
+      return GetItems(config, currentDir, () => mDirectory.GetFiles(currentDir, "*.*"));
+    }
+
     private IEnumerable<string> GetSubDirectories(Config config, string currentDir) {
+      return GetItems(config, currentDir, () => mDirectory.GetDirectories(currentDir));
+    }
+
+    private IEnumerable<string> GetItems(Config config, string currentDir, Func<IEnumerable<string>> getter) {
       try {
-        return mDirectory.GetDirectories(currentDir);
+        return getter();
       } catch (Exception e) {
         mErrorHandler.Handle(config, currentDir, e);
       }

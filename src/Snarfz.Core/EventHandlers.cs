@@ -16,8 +16,8 @@ namespace Snarfz.Core {
       var handler = OnDirectory;
       if (handler != null)
         handler(mConfig, args);
-    } 
-    
+    }
+
     public void HandleFile(FileVisitEventArgs args) {
       var handler = OnFile;
       if (handler != null)
