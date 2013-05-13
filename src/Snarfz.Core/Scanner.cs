@@ -18,15 +18,15 @@ namespace Snarfz.Core {
 
     private void ProcessDirectory(Config config, string currentDir) {
       config.Handlers.HandleDirectory(new DirectoryVisitEventArgs(currentDir));
-      foreach (var dir in GetSubDirectories(currentDir))
+      foreach (var dir in GetSubDirectories(config, currentDir))
         ProcessDirectory(config, dir);
     }
 
-    private IEnumerable<string> GetSubDirectories(string currentDir) {
+    private IEnumerable<string> GetSubDirectories(Config config, string currentDir) {
       try {
         return mDirectory.GetDirectories(currentDir);
       } catch (Exception e) {
-        mErrorHandler.Handle(currentDir, e);
+        mErrorHandler.Handle(config, currentDir, e);
       }
       return Enumerable.Empty<string>();
     }

@@ -25,7 +25,8 @@ namespace DirScan {
         Console.ReadLine();
       };
       config.OnDirectory += (o, a) => Console.WriteLine(a.Path);
-      new Scanner(new DotNetDirectory(), new ScanErrorHandler(config)).Start(config);
+      new Scanner(new DotNetDirectory(), new ScanErrorHandler()).Start(config);
+      Snarfzer.NewScanner().Start(config);
     }
   }
 }
