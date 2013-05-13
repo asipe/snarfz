@@ -4,11 +4,13 @@ using System;
 
 namespace Snarfz.Core {
   public class ScanErrorEventArgs : EventArgs {
-    public ScanErrorEventArgs(string path, Exception exception) {
+    public ScanErrorEventArgs(ScanErrorSource source, string path, Exception exception) {
+      Source = source;
       Path = path;
       Exception = exception;
     }
 
+    public ScanErrorSource Source{get;private set;}
     public string Path{get;private set;}
     public Exception Exception{get;private set;}
   }

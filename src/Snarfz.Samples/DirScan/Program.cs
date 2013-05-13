@@ -31,7 +31,8 @@ namespace DirScan {
                                       ScanErrorMode = scanErrorMode
                                     };
       config.OnError += (o, a) => {
-        Console.WriteLine("!!! ERROR DURING SCAN: " + a.Exception.Message);
+        Console.WriteLine("!!! ERROR DURING SCAN({0} - {1}):", a.Source, a.Path);
+        Console.WriteLine(a.Exception.Message);
         Console.WriteLine("Press Enter To Continue Scan");
         Console.ReadLine();
       };

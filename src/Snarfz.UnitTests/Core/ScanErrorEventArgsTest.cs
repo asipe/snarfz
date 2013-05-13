@@ -11,9 +11,10 @@ namespace Snarfz.UnitTests.Core {
     [Test]
     public void TestDefaults() {
       var ex = new Exception("");
-      var args = new ScanErrorEventArgs("apath", ex);
+      var args = new ScanErrorEventArgs(ScanErrorSource.File, "apath", ex);
       Assert.That(args.Path, Is.EqualTo("apath"));
       Assert.That(args.Exception, Is.EqualTo(ex));
+      Assert.That(args.Source, Is.EqualTo(ScanErrorSource.File));
     }
   }
 }

@@ -39,18 +39,18 @@ namespace Snarfz.Core {
     }
 
     private IEnumerable<string> GetFile(Config config, string currentDir) {
-      return GetItems(config, currentDir, () => mDirectory.GetFiles(currentDir, "*.*"));
+      return GetItems(config, ScanErrorSource.File, currentDir, () => mDirectory.GetFiles(currentDir, "*.*"));
     }
 
     private IEnumerable<string> GetSubDirectories(Config config, string currentDir) {
-      return GetItems(config, currentDir, () => mDirectory.GetDirectories(currentDir));
+      return GetItems(config, ScanErrorSource.Directory, currentDir, () => mDirectory.GetDirectories(currentDir));
     }
 
-    private IEnumerable<string> GetItems(Config config, string currentDir, Func<IEnumerable<string>> getter) {
+    private IEnumerable<string> GetItems(Config config, ScanErrorSource source, string currentPath, Func<IEnumerable<string>> getter) {
       try {
         return getter();
       } catch (Exception e) {
-        mErrorHandler.Handle(config, currentDir, e);
+        mErrorHandler.Handle(config, source, currentPath, e);
       }
       return Enumerable.Empty<string>();
     }

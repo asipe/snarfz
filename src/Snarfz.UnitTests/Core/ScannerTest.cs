@@ -67,7 +67,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Returns(subDir0SubDirs);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Throws(ex);
       mDirectory.Setup(d => d.GetDirectories(subDir0SubDirs[0])).Returns(BA<string>());
-      mErrorHandler.Setup(h => h.Handle(mConfig, rootSubDirs[1], ex)).Throws<ScanException>();
+      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.Directory, rootSubDirs[1], ex)).Throws<ScanException>();
       Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
       AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root),
                                new DirectoryVisitEventArgs(rootSubDirs[0]),
@@ -87,7 +87,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Returns(subDir1SubDirs);
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
-      mErrorHandler.Setup(h => h.Handle(mConfig, rootSubDirs[0], ex));
+      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.Directory, rootSubDirs[0], ex));
       mScanner.Start(mConfig);
       AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root),
                                new DirectoryVisitEventArgs(rootSubDirs[0]),
@@ -174,7 +174,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
       mDirectory.Setup(d => d.GetFiles(rootSubDirs[0], "*.*")).Throws(ex);
-      mErrorHandler.Setup(h => h.Handle(mConfig, rootSubDirs[0], ex)).Throws<ScanException>();
+      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[0], ex)).Throws<ScanException>();
       Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
       AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root),
                                new DirectoryVisitEventArgs(rootSubDirs[0])));
@@ -203,7 +203,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetFiles(subDir1SubDirs[1], "*.*")).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
-      mErrorHandler.Setup(h => h.Handle(mConfig, rootSubDirs[1], ex));
+      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[1], ex));
       mScanner.Start(mConfig);
       AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root),
                                new DirectoryVisitEventArgs(rootSubDirs[0]),
@@ -290,7 +290,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
       mDirectory.Setup(d => d.GetFiles(rootSubDirs[0], "*.*")).Throws(ex);
-      mErrorHandler.Setup(h => h.Handle(mConfig, rootSubDirs[0], ex)).Throws<ScanException>();
+      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[0], ex)).Throws<ScanException>();
       Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
       Assert.That(mDirSeen, Is.Empty);
       AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0])));
@@ -318,7 +318,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetFiles(subDir1SubDirs[1], "*.*")).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
-      mErrorHandler.Setup(h => h.Handle(mConfig, rootSubDirs[1], ex));
+      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[1], ex));
       mScanner.Start(mConfig);
       Assert.That(mDirSeen, Is.Empty);
       AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0]),

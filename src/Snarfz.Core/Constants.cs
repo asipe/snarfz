@@ -12,4 +12,9 @@ namespace Snarfz.Core {
     Ignore,
     Ask
   }
+
+  public enum ScanErrorSource {
+    Directory,
+    File
+  }
 }

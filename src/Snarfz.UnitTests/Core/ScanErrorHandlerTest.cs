@@ -11,7 +11,7 @@ namespace Snarfz.UnitTests.Core {
     public void TestHandleThrowsWhenModeIsThrow() {
       mConfig.ScanErrorMode = ScanErrorMode.Throw;
       var original = new Exception("test ex");
-      var actual = Assert.Throws<ScanException>(() => mHandler.Handle(mConfig, "", original));
+      var actual = Assert.Throws<ScanException>(() => mHandler.Handle(mConfig, ScanErrorSource.Directory, "", original));
       Assert.That(actual.InnerException, Is.EqualTo(original));
       Assert.That(actual.Message, Is.EqualTo("test ex"));
     }
@@ -20,7 +20,7 @@ namespace Snarfz.UnitTests.Core {
     public void TestHandleSilencesWhenModeIsSilence() {
       mConfig.ScanErrorMode = ScanErrorMode.Ignore;
       var original = new Exception("test ex");
-      mHandler.Handle(mConfig, "", original);
+      mHandler.Handle(mConfig, ScanErrorSource.File, "", original);
     }
 
     [Test]
@@ -29,10 +29,10 @@ namespace Snarfz.UnitTests.Core {
       var handlerCalled = false;
       mConfig.ScanErrorMode = ScanErrorMode.Ask;
       mConfig.OnError += (o, a) => {
-        AssertEqual(a, new ScanErrorEventArgs(@"some\path", original));
+        AssertEqual(a, new ScanErrorEventArgs(ScanErrorSource.File, @"some\path", original));
         handlerCalled = true;
       };
-      mHandler.Handle(mConfig, @"some\path", original);
+      mHandler.Handle(mConfig, ScanErrorSource.File, @"some\path", original);
       Assert.That(handlerCalled, Is.True);
     }
 
@@ -41,10 +41,10 @@ namespace Snarfz.UnitTests.Core {
       var original = new Exception("test ex 1");
       mConfig.ScanErrorMode = ScanErrorMode.Ask;
       mConfig.OnError += (o, a) => {
-        AssertEqual(a, new ScanErrorEventArgs(@"some\path", original));
+        AssertEqual(a, new ScanErrorEventArgs(ScanErrorSource.File, @"some\path", original));
         throw new InvalidOperationException("test ex 2");
       };
-      Assert.Throws<InvalidOperationException>(() => mHandler.Handle(mConfig, @"some\path", original));
+      Assert.Throws<InvalidOperationException>(() => mHandler.Handle(mConfig, ScanErrorSource.File, @"some\path", original));
     }
 
     [SetUp]
