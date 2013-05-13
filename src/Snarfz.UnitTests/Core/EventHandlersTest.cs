@@ -48,6 +48,26 @@ namespace Snarfz.UnitTests.Core {
       Assert.That(seen, Is.EqualTo(BA(arg, arg)));
     }
 
+    [Test]
+    public void TestHandleFileWithNoHandlers() {
+      mHandlers.HandleFile(null);
+    }
+
+    [Test]
+    public void TestHandleFileWithHandlers() {
+      var seen = new List<FileVisitEventArgs>();
+
+      for (var x = 0; x < 2; ++x)
+        mHandlers.OnFile += (o, e) => {
+          Assert.That(o, Is.SameAs(mConfig));
+          seen.Add(e);
+        };
+
+      var arg = CA<FileVisitEventArgs>();
+      mHandlers.HandleFile(arg);
+      Assert.That(seen, Is.EqualTo(BA(arg, arg)));
+    }
+
     [SetUp]
     public void DoSetup() {
       mConfig = new Config("");
