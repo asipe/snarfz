@@ -17,9 +17,14 @@ namespace Snarfz.Core {
     }
 
     private void ProcessDirectory(Config config, string currentDir) {
-      config.Handlers.HandleDirectory(new DirectoryVisitEventArgs(currentDir));
+      NotifyOnDirectory(config, currentDir);
       ProcessFilesForDir(config, currentDir);
       ProcessSubDirectoriesForDir(config, currentDir);
+    }
+
+    private static void NotifyOnDirectory(Config config, string currentDir) {
+      if (config.ScanType != ScanType.FilesOnly)
+        config.Handlers.HandleDirectory(new DirectoryVisitEventArgs(currentDir));
     }
 
     private void ProcessSubDirectoriesForDir(Config config, string currentDir) {
@@ -28,7 +33,7 @@ namespace Snarfz.Core {
     }
 
     private void ProcessFilesForDir(Config config, string dir) {
-      if (config.ScanType == ScanType.All)
+      if (config.ScanType != ScanType.DirectoriesOnly)
         foreach (var file in GetFile(config, dir))
           config.Handlers.HandleFile(new FileVisitEventArgs(file));
     }

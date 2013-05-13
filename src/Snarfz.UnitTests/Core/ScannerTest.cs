@@ -216,6 +216,116 @@ namespace Snarfz.UnitTests.Core {
                                 new FileVisitEventArgs(subDir1SubDir0Files[1])));
     }
 
+    [Test]
+    public void TestScanFilesOnlyNoSubDirectoriesNoFiles() {
+      mConfig.ScanType = ScanType.FilesOnly;
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(BA<string>());
+      mScanner.Start(mConfig);
+      Assert.That(mDirSeen, Is.Empty);
+      Assert.That(mFileSeen, Is.Empty);
+    }
+
+    [Test]
+    public void TestScanFilesOnlyNoSubDirectoriesSingleFile() {
+      mConfig.ScanType = ScanType.FilesOnly;
+      var rootFiles = BuildFilePaths(_Root, 1);
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(BA<string>());
+      mScanner.Start(mConfig);
+      Assert.That(mDirSeen, Is.Empty);
+      AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0])));
+    }
+
+    [Test]
+    public void TestScanFilesOnlyNoSubDirectoriesMultipleFiles() {
+      mConfig.ScanType = ScanType.FilesOnly;
+      var rootFiles = BuildFilePaths(_Root, 3);
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(BA<string>());
+      mScanner.Start(mConfig);
+      Assert.That(mDirSeen, Is.Empty);
+      AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0]),
+                                new FileVisitEventArgs(rootFiles[1]),
+                                new FileVisitEventArgs(rootFiles[2])));
+    }
+
+    [Test]
+    public void TestScanFilesOnlyWithMultipleSubDirectories() {
+      mConfig.ScanType = ScanType.FilesOnly;
+      var rootSubDirs = BuildDirPaths(_Root, 2);
+      var rootFiles = BuildFilePaths(_Root, 1);
+      var subDir0SubDirs = BuildDirPaths(rootSubDirs[0], 1);
+      var subDir0Files = BA<string>();
+      var subDir1SubDirs = BuildDirPaths(rootSubDirs[1], 2);
+      var subDir1Files = BuildFilePaths(rootSubDirs[1], 3);
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
+      mDirectory.Setup(d => d.GetFiles(rootSubDirs[0], "*.*")).Returns(subDir0Files);
+      mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Returns(subDir0SubDirs);
+      mDirectory.Setup(d => d.GetFiles(rootSubDirs[1], "*.*")).Returns(subDir1Files);
+      mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Returns(subDir1SubDirs);
+      mDirectory.Setup(d => d.GetFiles(subDir0SubDirs[0], "*.*")).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetDirectories(subDir0SubDirs[0])).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetFiles(subDir1SubDirs[0], "*.*")).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetFiles(subDir1SubDirs[1], "*.*")).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
+      mScanner.Start(mConfig);
+      Assert.That(mDirSeen, Is.Empty);
+      AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0]),
+                                new FileVisitEventArgs(subDir1Files[0]),
+                                new FileVisitEventArgs(subDir1Files[1]),
+                                new FileVisitEventArgs(subDir1Files[2])));
+    }
+
+
+
+    [Test]
+    public void TestScanFilesOnlyWithErrorInFileScanThrowsWhenScanErrorHandlerThrows() {
+      mConfig.ScanType = ScanType.FilesOnly;
+      var ex = new Exception("test ex");
+      var rootSubDirs = BuildDirPaths(_Root, 2);
+      var rootFiles = BuildFilePaths(_Root, 1);
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
+      mDirectory.Setup(d => d.GetFiles(rootSubDirs[0], "*.*")).Throws(ex);
+      mErrorHandler.Setup(h => h.Handle(mConfig, rootSubDirs[0], ex)).Throws<ScanException>();
+      Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
+      Assert.That(mDirSeen, Is.Empty);
+      AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0])));
+    }
+
+    [Test]
+    public void TestScanFilesOnlyWithErrorInFileScanPrunesWhenScanErrorHandlerDoesNotThrow() {
+      mConfig.ScanType = ScanType.FilesOnly;
+      var ex = new Exception("test ex");
+      var rootSubDirs = BuildDirPaths(_Root, 2);
+      var rootFiles = BuildFilePaths(_Root, 1);
+      var subDir0SubDirs = BuildDirPaths(rootSubDirs[0], 1);
+      var subDir0Files = BA<string>();
+      var subDir1SubDirs = BuildDirPaths(rootSubDirs[1], 2);
+      var subDir1SubDir0Files = BuildFilePaths(subDir1SubDirs[0], 2);
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
+      mDirectory.Setup(d => d.GetFiles(rootSubDirs[0], "*.*")).Returns(subDir0Files);
+      mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Returns(subDir0SubDirs);
+      mDirectory.Setup(d => d.GetFiles(rootSubDirs[1], "*.*")).Throws(ex);
+      mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Returns(subDir1SubDirs);
+      mDirectory.Setup(d => d.GetFiles(subDir0SubDirs[0], "*.*")).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetDirectories(subDir0SubDirs[0])).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetFiles(subDir1SubDirs[0], "*.*")).Returns(subDir1SubDir0Files);
+      mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetFiles(subDir1SubDirs[1], "*.*")).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
+      mErrorHandler.Setup(h => h.Handle(mConfig, rootSubDirs[1], ex));
+      mScanner.Start(mConfig);
+      Assert.That(mDirSeen, Is.Empty);
+      AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0]),
+                                new FileVisitEventArgs(subDir1SubDir0Files[0]),
+                                new FileVisitEventArgs(subDir1SubDir0Files[1])));
+    }
+
     [SetUp]
     public void DoSetup() {
       mDirSeen = new List<DirectoryVisitEventArgs>();
