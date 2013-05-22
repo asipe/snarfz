@@ -9,5 +9,6 @@ namespace Snarfz.Core {
     }
 
     public string Path{get;private set;}
+    public bool Prune{get;set;}
   }
 }

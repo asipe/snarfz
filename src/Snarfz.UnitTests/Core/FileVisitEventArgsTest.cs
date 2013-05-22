@@ -11,6 +11,7 @@ namespace Snarfz.UnitTests.Core {
     public void TestDefaults() {
       var args = new FileVisitEventArgs("apath");
       Assert.That(args.Path, Is.EqualTo("apath"));
+      Assert.That(args.Prune, Is.False);
     }
   }
 }
