@@ -17,4 +17,9 @@ namespace Snarfz.Core {
     Directory,
     File
   }
+
+  public enum EventErrorMode {
+    Throw,
+    Ignore
+  }
 }

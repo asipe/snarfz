@@ -13,21 +13,15 @@ namespace Snarfz.Core {
     public event EventHandler<ScanErrorEventArgs> OnError;
 
     public void HandleDirectory(DirectoryVisitEventArgs args) {
-      var handler = OnDirectory;
-      if (handler != null)
-        handler(mConfig, args);
+      OnDirectory.RaiseEvent(mConfig, args);
     }
 
     public void HandleFile(FileVisitEventArgs args) {
-      var handler = OnFile;
-      if (handler != null)
-        handler(mConfig, args);
+      OnFile.RaiseEvent(mConfig, args);
     }
 
     public void HandleError(ScanErrorEventArgs args) {
-      var handler = OnError;
-      if (handler != null)
-        handler(mConfig, args);
+      OnError.RaiseEvent(mConfig, args);
     }
 
     private readonly Config mConfig;

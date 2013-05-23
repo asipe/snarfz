@@ -13,6 +13,7 @@ namespace Snarfz.UnitTests.Core {
       Assert.That(mConfig.Root, Is.EqualTo("apath"));
       Assert.That(mConfig.ScanType, Is.EqualTo(ScanType.All));
       Assert.That(mConfig.ScanErrorMode, Is.EqualTo(ScanErrorMode.Throw));
+      Assert.That(mConfig.EventErrorMode, Is.EqualTo(EventErrorMode.Throw));
     }
 
     [Test]
