@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="Core\BaseVisitEventArgsTest.cs" />
     <Compile Include="Core\ConfigTest.cs" />
+    <Compile Include="Core\EventErrorHandlerTest.cs" />
     <Compile Include="Core\EventHandlersTest.cs" />
     <Compile Include="Core\FileVisitEventArgsTest.cs" />
     <Compile Include="Core\ScanErrorEventArgsTest.cs" />

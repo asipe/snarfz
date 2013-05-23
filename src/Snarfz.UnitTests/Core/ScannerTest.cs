@@ -67,7 +67,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[0])).Returns(subDir0SubDirs);
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Throws(ex);
       mDirectory.Setup(d => d.GetDirectories(subDir0SubDirs[0])).Returns(BA<string>());
-      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.Directory, rootSubDirs[1], ex)).Throws<ScanException>();
+      mScanErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.Directory, rootSubDirs[1], ex)).Throws<ScanException>();
       Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
       AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root),
                                new DirectoryVisitEventArgs(rootSubDirs[0]),
@@ -87,7 +87,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(rootSubDirs[1])).Returns(subDir1SubDirs);
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
-      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.Directory, rootSubDirs[0], ex));
+      mScanErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.Directory, rootSubDirs[0], ex));
       mScanner.Start(mConfig);
       AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root),
                                new DirectoryVisitEventArgs(rootSubDirs[0]),
@@ -169,7 +169,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
       mDirectory.Setup(d => d.GetFiles(rootSubDirs[0], "*.*")).Throws(ex);
-      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[0], ex)).Throws<ScanException>();
+      mScanErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[0], ex)).Throws<ScanException>();
       Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
       AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root),
                                new DirectoryVisitEventArgs(rootSubDirs[0])));
@@ -197,7 +197,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetFiles(subDir1SubDirs[1], "*.*")).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
-      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[1], ex));
+      mScanErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[1], ex));
       mScanner.Start(mConfig);
       AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root),
                                new DirectoryVisitEventArgs(rootSubDirs[0]),
@@ -282,7 +282,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
       mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(rootSubDirs);
       mDirectory.Setup(d => d.GetFiles(rootSubDirs[0], "*.*")).Throws(ex);
-      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[0], ex)).Throws<ScanException>();
+      mScanErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[0], ex)).Throws<ScanException>();
       Assert.Throws<ScanException>(() => mScanner.Start(mConfig));
       Assert.That(mDirSeen, Is.Empty);
       AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0])));
@@ -310,7 +310,7 @@ namespace Snarfz.UnitTests.Core {
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[0])).Returns(BA<string>());
       mDirectory.Setup(d => d.GetFiles(subDir1SubDirs[1], "*.*")).Returns(BA<string>());
       mDirectory.Setup(d => d.GetDirectories(subDir1SubDirs[1])).Returns(BA<string>());
-      mErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[1], ex));
+      mScanErrorHandler.Setup(h => h.Handle(mConfig, ScanErrorSource.File, rootSubDirs[1], ex));
       mScanner.Start(mConfig);
       Assert.That(mDirSeen, Is.Empty);
       AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0]),
@@ -585,6 +585,56 @@ namespace Snarfz.UnitTests.Core {
                                ));
     }
 
+    [Test]
+    public void TestScanWithDirectoryEventHandlingThrowingThrowsIfEventErrorHandlerThrows() {
+      var original = new Exception("test ex");
+      mConfig.OnDirectory += (o, a) => {throw original;};
+      mEventErrorHandler.Setup(h => h.Handle(mConfig, original)).Throws(original);
+      var ex = Assert.Throws<Exception>(() => mScanner.Start(mConfig));
+      Assert.That(ex.Message, Is.EqualTo("test ex"));
+      AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root)));
+      Assert.That(mFileSeen, Is.Empty);
+    }
+
+    [Test]
+    public void TestScanWithDirectoryEventHandlingThrowingContinuesScanningIfEventErrorHandlerSilences() {
+      var original = new Exception("test ex");
+      mConfig.OnDirectory += (o, a) => {throw original;};
+      mEventErrorHandler.Setup(h => h.Handle(mConfig, original));
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(BA<string>());
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(BA<string>());
+      mScanner.Start(mConfig);
+      AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root)));
+      Assert.That(mFileSeen, Is.Empty);
+    }
+
+    [Test]
+    public void TestScanWithFileEventHandlingThrowingThrowsIfEventErrorHandlerThrows() {
+      var original = new Exception("test ex");
+      var rootFiles = BuildFilePaths(_Root, 2);
+      mConfig.OnFile += (o, a) => {throw original;};
+      mEventErrorHandler.Setup(h => h.Handle(mConfig, original)).Throws(original);
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
+      var ex = Assert.Throws<Exception>(() => mScanner.Start(mConfig));
+      Assert.That(ex.Message, Is.EqualTo("test ex"));
+      AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root)));
+      AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0])));
+    }
+
+    [Test]
+    public void TestScanWithFileEventHandlingThrowingContinuesScanningIfEventErrorHandlerSilences() {
+      var original = new Exception("test ex");
+      var rootFiles = BuildFilePaths(_Root, 2);
+      mConfig.OnFile += (o, a) => {throw original;};
+      mEventErrorHandler.Setup(h => h.Handle(mConfig, original));
+      mDirectory.Setup(d => d.GetFiles(_Root, "*.*")).Returns(rootFiles);
+      mDirectory.Setup(d => d.GetDirectories(_Root)).Returns(BA<string>());
+      mScanner.Start(mConfig);
+      AssertEqual(mDirSeen, BA(new DirectoryVisitEventArgs(_Root)));
+      AssertEqual(mFileSeen, BA(new FileVisitEventArgs(rootFiles[0]),
+                                new FileVisitEventArgs(rootFiles[1])));
+    }
+
     [SetUp]
     public void DoSetup() {
       mDirSeen = new List<DirectoryVisitEventArgs>();
@@ -593,8 +643,9 @@ namespace Snarfz.UnitTests.Core {
       mConfig.OnDirectory += (o, a) => mDirSeen.Add(a);
       mConfig.OnFile += (o, a) => mFileSeen.Add(a);
       mDirectory = Mok<IDirectory>();
-      mErrorHandler = Mok<IScanErrorHandler>();
-      mScanner = new Scanner(mDirectory.Object, mErrorHandler.Object);
+      mScanErrorHandler = Mok<IScanErrorHandler>();
+      mEventErrorHandler = Mok<IEventErrorHandler>();
+      mScanner = new Scanner(mDirectory.Object, mScanErrorHandler.Object, mEventErrorHandler.Object);
     }
 
     private Mock<IDirectory> mDirectory;
@@ -602,7 +653,8 @@ namespace Snarfz.UnitTests.Core {
     private Config mConfig;
     private List<DirectoryVisitEventArgs> mDirSeen;
     private List<FileVisitEventArgs> mFileSeen;
-    private Mock<IScanErrorHandler> mErrorHandler;
+    private Mock<IScanErrorHandler> mScanErrorHandler;
+    private Mock<IEventErrorHandler> mEventErrorHandler;
     private const string _Root = @"c:\myfolder";
   }
 }

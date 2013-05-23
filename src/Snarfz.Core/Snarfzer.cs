@@ -5,7 +5,7 @@ using SupaCharge.Core.IOAbstractions;
 namespace Snarfz.Core {
   public static class Snarfzer {
     public static Scanner NewScanner() {
-      return new Scanner(new DotNetDirectory(), new ScanErrorHandler());
+      return new Scanner(new DotNetDirectory(), new ScanErrorHandler(), new EventErrorHandler());
     }
   }
 }

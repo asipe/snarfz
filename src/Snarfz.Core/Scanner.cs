@@ -7,9 +7,10 @@ using SupaCharge.Core.IOAbstractions;
 
 namespace Snarfz.Core {
   public class Scanner {
-    public Scanner(IDirectory directory, IScanErrorHandler errorHandler) {
+    public Scanner(IDirectory directory, IScanErrorHandler scanErrorHandler, IEventErrorHandler eventErrorHandler) {
       mDirectory = directory;
-      mErrorHandler = errorHandler;
+      mScanErrorHandler = scanErrorHandler;
+      mEventErrorHandler = eventErrorHandler;
     }
 
     public void Start(Config config) {
@@ -29,12 +30,11 @@ namespace Snarfz.Core {
     private void NotifyOnDirectory(Config config, string currentDir) {
       if (config.ScanType == ScanType.FilesOnly)
         return;
-
       var args = new DirectoryVisitEventArgs(currentDir);
-      config.Handlers.HandleDirectory(args);
+      Notify(config, () => config.Handlers.HandleDirectory(args));
       mPruned = args.Prune;
     }
-    
+
     private void ProcessSubDirectoriesForDir(Config config, string currentDir) {
       foreach (var dir in GetSubDirectories(config, currentDir))
         ProcessDirectory(config, dir);
@@ -46,7 +46,7 @@ namespace Snarfz.Core {
 
       foreach (var file in GetFile(config, dir)) {
         var args = new FileVisitEventArgs(file);
-        config.Handlers.HandleFile(args);
+        Notify(config, () => config.Handlers.HandleFile(args));
         if (args.Prune)
           break;
       }
@@ -64,13 +64,22 @@ namespace Snarfz.Core {
       try {
         return getter();
       } catch (Exception e) {
-        mErrorHandler.Handle(config, source, currentPath, e);
+        mScanErrorHandler.Handle(config, source, currentPath, e);
       }
       return Enumerable.Empty<string>();
     }
 
+    private void Notify(Config config, Action notifier) {
+      try {
+        notifier();
+      } catch (Exception e) {
+        mEventErrorHandler.Handle(config, e);
+      }
+    }
+
     private readonly IDirectory mDirectory;
-    private readonly IScanErrorHandler mErrorHandler;
+    private readonly IEventErrorHandler mEventErrorHandler;
+    private readonly IScanErrorHandler mScanErrorHandler;
     private bool mPruned;
   }
 }

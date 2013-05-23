@@ -47,8 +47,10 @@
     <Compile Include="BaseVisitEventArgs.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="EventErrorHandler.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="FileVisitEventArgs.cs" />
+    <Compile Include="IEventErrorHandler.cs" />
     <Compile Include="IScanErrorHandler.cs" />
     <Compile Include="ScanErrorHandler.cs" />
     <Compile Include="EventHandlers.cs" />
