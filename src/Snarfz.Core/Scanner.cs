@@ -18,24 +18,38 @@ namespace Snarfz.Core {
 
     private void ProcessDirectory(Config config, string currentDir) {
       NotifyOnDirectory(config, currentDir);
+
+      if (mPruned)
+        return;
+
       ProcessFilesForDir(config, currentDir);
       ProcessSubDirectoriesForDir(config, currentDir);
     }
 
-    private static void NotifyOnDirectory(Config config, string currentDir) {
-      if (config.ScanType != ScanType.FilesOnly)
-        config.Handlers.HandleDirectory(new DirectoryVisitEventArgs(currentDir));
-    }
+    private void NotifyOnDirectory(Config config, string currentDir) {
+      if (config.ScanType == ScanType.FilesOnly)
+        return;
 
+      var args = new DirectoryVisitEventArgs(currentDir);
+      config.Handlers.HandleDirectory(args);
+      mPruned = args.Prune;
+    }
+    
     private void ProcessSubDirectoriesForDir(Config config, string currentDir) {
       foreach (var dir in GetSubDirectories(config, currentDir))
         ProcessDirectory(config, dir);
     }
 
     private void ProcessFilesForDir(Config config, string dir) {
-      if (config.ScanType != ScanType.DirectoriesOnly)
-        foreach (var file in GetFile(config, dir))
-          config.Handlers.HandleFile(new FileVisitEventArgs(file));
+      if (config.ScanType == ScanType.DirectoriesOnly)
+        return;
+
+      foreach (var file in GetFile(config, dir)) {
+        var args = new FileVisitEventArgs(file);
+        config.Handlers.HandleFile(args);
+        if (args.Prune)
+          break;
+      }
     }
 
     private IEnumerable<string> GetFile(Config config, string currentDir) {
@@ -57,5 +71,6 @@ namespace Snarfz.Core {
 
     private readonly IDirectory mDirectory;
     private readonly IScanErrorHandler mErrorHandler;
+    private bool mPruned;
   }
 }
