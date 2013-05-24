@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirScan", "DirScan\DirScan.csproj", "{B71AC73A-E714-4B77-A0D0-FA8A2070A01A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyDirectoryScanner", "EmptyDirectoryScanner\EmptyDirectoryScanner.csproj", "{FD2DCF8F-7045-4E0C-99E9-91CBFC5FABE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleScan", "SimpleScan\SimpleScan.csproj", "{5137703F-8D6E-4D8C-A89C-8D240F58F7FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +17,14 @@ Global
 		{B71AC73A-E714-4B77-A0D0-FA8A2070A01A}.Debug|x86.Build.0 = Debug|x86
 		{B71AC73A-E714-4B77-A0D0-FA8A2070A01A}.Release|x86.ActiveCfg = Release|x86
 		{B71AC73A-E714-4B77-A0D0-FA8A2070A01A}.Release|x86.Build.0 = Release|x86
+		{FD2DCF8F-7045-4E0C-99E9-91CBFC5FABE1}.Debug|x86.ActiveCfg = Debug|x86
+		{FD2DCF8F-7045-4E0C-99E9-91CBFC5FABE1}.Debug|x86.Build.0 = Debug|x86
+		{FD2DCF8F-7045-4E0C-99E9-91CBFC5FABE1}.Release|x86.ActiveCfg = Release|x86
+		{FD2DCF8F-7045-4E0C-99E9-91CBFC5FABE1}.Release|x86.Build.0 = Release|x86
+		{5137703F-8D6E-4D8C-A89C-8D240F58F7FE}.Debug|x86.ActiveCfg = Debug|x86
+		{5137703F-8D6E-4D8C-A89C-8D240F58F7FE}.Debug|x86.Build.0 = Debug|x86
+		{5137703F-8D6E-4D8C-A89C-8D240F58F7FE}.Release|x86.ActiveCfg = Release|x86
+		{5137703F-8D6E-4D8C-A89C-8D240F58F7FE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
