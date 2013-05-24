@@ -10,6 +10,7 @@
   <property name="lib.dir" value="${src.dir}\lib" readonly="true"/>
   <property name="vsdebug.dir" value="${root.dir}\vsdebug" readonly="true"/>
   <property name="test.results.dir" value="${root.dir}\test_results" readonly="true"/>
+  <property name="deploy.dir" value="${root.dir}\deploy" readonly="true"/>
   <property name="nunit.test.assembly" value=""/>
   <property name="nunit.exe" value="nunit-console.exe"/>
   <property name="verbose" value="false" overwrite="false"/>
@@ -88,6 +89,15 @@
   </target>
 
   <target name="Cycle" depends ="Build.All, Run.UnitTests"/>
+
+  <target name="Deploy" depends ="Build.All">
+    <mkdir dir="${deploy.dir}" verbose="${verbose}"/>
+    <copy todir="${deploy.dir}" verbose="${verbose}">
+      <fileset basedir="${debug.dir}">
+        <include name="snarfz.core.*"/>
+      </fileset>
+    </copy>
+  </target>
 
   <target name="Init.VSDebug">
     <mkdir dir="${vsdebug.dir}" verbose="${verbose}"/>
