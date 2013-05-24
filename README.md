@@ -7,7 +7,27 @@ of directories and files, pruning support and several modes of error handling.
 
 ### Usage
 
+```csharp
+using System;
+using Snarfz.Core;
+
+namespace SimpleScan {
+  internal class Program {
+    private static void Main() {
+      var config = new Config(@"c:\") { ScanErrorMode = ScanErrorMode.Ignore };
+      config.OnDirectory += (o, a) => Console.WriteLine(a.Path);
+      config.OnFile += (o, a) => Console.WriteLine(a.Path);
+      Snarfzer.NewScanner().Start(config);
+    }
+  }
+}
+```
+
 snarfz/src/Snarfz.Samples/ contains a solution with several sample projects
+
+* SimpleScan is a console application which will scan your C:\ drive and ehco the path of all files and diretories to the console ignoring all errors.
+* EmptyDirectoryScanner is a console applicaiton which will scan a given directory (provided on the command line) and list all the directories that are empty (no files and no sub directories).  It will halt on any error.
+* DirScan is a console application which allows most options of Snarfz to be configured and toyed with
 
 ### Nuget
 
