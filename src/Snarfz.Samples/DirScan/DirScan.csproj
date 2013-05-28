@@ -34,11 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Snarfz.Core">
-      <HintPath>..\..\..\vsdebug\Snarfz.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SupaCharge.Core">
-      <HintPath>..\..\..\vsdebug\SupaCharge.Core.dll</HintPath>
+    <Reference Include="Snarfz.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\deploy\merged\Snarfz.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

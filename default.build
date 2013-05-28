@@ -26,6 +26,8 @@
   <target name="Clean">
     <delete dir="${debug.dir}"/>
     <mkdir dir="${debug.dir}"/>
+    <delete dir="${deploy.dir}"/>
+    <mkdir dir="${deploy.dir}"/>
     <delete dir="${test.results.dir}"/>
     <mkdir dir="${test.results.dir}"/> 
 
@@ -91,12 +93,24 @@
   <target name="Cycle" depends ="Build.All, Run.UnitTests"/>
 
   <target name="Deploy" depends ="Build.All">
+    <property name="raw.deploy.dir" value="${deploy.dir}\raw"/>
+    <property name="merged.deploy.dir" value="${deploy.dir}\merged"/>
     <mkdir dir="${deploy.dir}" verbose="${verbose}"/>
-    <copy todir="${deploy.dir}" verbose="${verbose}">
+    <mkdir dir="${raw.deploy.dir}" verbose="${verbose}"/>
+    <mkdir dir="${merged.deploy.dir}" verbose="${verbose}"/>
+    
+    <copy todir="${raw.deploy.dir}" verbose="${verbose}">
       <fileset basedir="${debug.dir}">
         <include name="snarfz.core.*"/>
+        <include name="supacharge.core.*"/>
       </fileset>
     </copy>
+
+    <exec program="thirdparty\ilmerge.2.13.0307\ILMerge.exe"
+          verbose="${verbose}"
+          commandline="/t:library /out:${merged.deploy.dir}\Snarfz.Core.dll ${raw.deploy.dir}\Snarfz.Core.dll ${raw.deploy.dir}\SupaCharge.Core.dll"
+          workingdir="${root.dir}"
+          failonerror="true"/>
   </target>
 
   <target name="Init.VSDebug">
