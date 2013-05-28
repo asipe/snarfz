@@ -38,10 +38,12 @@ Coming soon
 1. clone the snarfz repository
 2. open a powershell command prompt
 3. navigate to the root of the snarfz clone 
-4. run scipts\bootstrap.ps1  (at this point you can also open the solution and build)
+4. run scipts\bootstrap.ps1 
 5. run nant Clean Cycle Deploy
 6. a raw deployment can be found in deploy\raw
 7. an ilmerged deployment (single assembly) can be found in deploy\merged
+
+After step 4 you can also build via the solution.
 
 ### License
 
