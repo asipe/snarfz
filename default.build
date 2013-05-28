@@ -16,7 +16,7 @@
   <property name="verbose" value="false" overwrite="false"/>
 
   <target name="ExecuteTests">
-    <exec program="thirdparty\nunit\bin\${nunit.exe}"
+    <exec program="thirdparty\nunit.runners.2.6.1\tools\${nunit.exe}"
           verbose="${verbose}"
           commandline="${debug.dir}\${nunit.test.assembly} /xml=test_results/${nunit.test.assembly}_results.xml /noshadow"
           workingdir="${root.dir}"
@@ -39,9 +39,9 @@
   </target>
 
   <target name="Build.SupaCharge">
-    <exec program="thirdparty\nant\bin\nant.exe"
+    <exec program="thirdparty\NAnt.Portable.0.92\nant.exe"
           workingdir="submodules\supacharge"
-          commandline="Clean Build.All Run.Tests -D:current.framework=net-4.0 -D:lib.dir=${lib.dir} -D:nunit.exe=${root.dir}\thirdparty\nunit\bin\nunit-console.exe -D:verbose=true"
+          commandline="Clean Build.All Run.Tests -D:current.framework=net-4.0 -D:lib.dir=${lib.dir} -D:nunit.exe=${root.dir}\thirdparty\nunit.runners.2.6.1\tools\nunit-console.exe -D:verbose=true"
           failonerror="true"
           verbose="${verbose}" />
 
@@ -113,7 +113,18 @@
           failonerror="true"/>
   </target>
 
-  <target name="Init.VSDebug">
+  <target name="Init.Lib">
+    <copy todir="${lib.dir}" flatten="true" verbose="${verbose}">
+      <fileset basedir="thirdparty">
+        <include name="AutoFixture.2.11.0\lib\Ploeh.AutoFixture.dll"/>
+        <include name="CompareNETObjects.1.6.0.0\lib\KellermanSoftware.Compare-NET-Objects.dll"/>
+        <include name="Moq.3.1.416.3\lib\Moq.dll"/>
+        <include name="NUnit.2.6.1\lib\nunit.framework.dll"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="Init.VSDebug" depends="Init.Lib">
     <mkdir dir="${vsdebug.dir}" verbose="${verbose}"/>
     <copy todir="${vsdebug.dir}" verbose="${verbose}">
       <fileset basedir="${lib.dir}">

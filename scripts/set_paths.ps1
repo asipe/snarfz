@@ -1,1 +1,0 @@
-﻿$env:PATH += ";.\thirdparty\nant\bin\;.\thirdparty\nunit\bin\"
