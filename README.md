@@ -40,7 +40,8 @@ Coming soon
 3. navigate to the root of the snarfz clone 
 4. run scipts\set_paths.ps
 5. run nant Clean Cycle Deploy
-6. Snarfz.Core.dll and Snarfz.core.pdb can be found in the deploy folder
+6. a raw deployment can be found in deploy\raw
+7. an ilmerged deployment (single assembly) can be found in deploy\merged
 
 ### License
 
