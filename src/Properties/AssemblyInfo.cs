@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Snarfz.Core")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Micro framework for enumerating a file system")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Z Bar Technologies, LLC")]
 [assembly: AssemblyProduct("Snarfz.Core")]
