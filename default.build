@@ -14,6 +14,8 @@
   <property name="nunit.test.assembly" value=""/>
   <property name="nunit.exe" value="nunit-console.exe"/>
   <property name="verbose" value="false" overwrite="false"/>
+  <property name="nuget.spec.dir" value="${root.dir}\nugetspec" />
+  <property name="nuget.working.dir" value="${root.dir}\nugetworking" />
 
   <target name="ExecuteTests">
     <exec program="thirdparty\nunit.runners.2.6.1\tools\${nunit.exe}"
@@ -109,6 +111,18 @@
     <exec program="thirdparty\ilmerge.2.13.0307\ILMerge.exe"
           verbose="${verbose}"
           commandline="/t:library /out:${merged.deploy.dir}\Snarfz.Core.dll ${raw.deploy.dir}\Snarfz.Core.dll ${raw.deploy.dir}\SupaCharge.Core.dll"
+          workingdir="${root.dir}"
+          failonerror="true"/>
+  </target>
+
+  <target name="Build.NugetPackage" depends="Clean Cycle Deploy">
+    <delete dir="${nuget.working.dir}" verbose="${verbose}" />
+    <copy todir="${nuget.working.dir}\lib\net40" file="${deploy.dir}\merged\Snarfz.Core.dll" verbose="${verbose}"/>
+    <copy todir="${nuget.working.dir}" file="${nuget.spec.dir}\Snarfz.Core.dll.nuspec" verbose="${verbose}"/>
+    
+    <exec program="src\.nuget\nuget.exe"
+          verbose="${verbose}"
+          commandline="pack ${nuget.working.dir}\Snarfz.Core.dll.nuspec -OutputDirectory ${nuget.working.dir}"
           workingdir="${root.dir}"
           failonerror="true"/>
   </target>
