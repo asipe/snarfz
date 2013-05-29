@@ -31,7 +31,9 @@ snarfz/src/Snarfz.Samples/ contains a solution with several sample projects
 
 ### Nuget
 
-Coming soon
+nuget package page:  https://nuget.org/packages/Snarfz/
+
+install via package manager:  Install-Package Snarfz
 
 ### Building
 
