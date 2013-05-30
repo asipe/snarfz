@@ -5,6 +5,12 @@ Snarfz is a simple micro framework for enumerating directories and files.
 It provides support for scanning a directory tree, event driven notifications 
 of directories and files, pruning support and several modes of error handling.
 
+Snarfz Supports
+* receiving events for files only, directories only or both files and directories
+* pruning support for sub directories and/or files
+* 3 modes of error handling support during a scan (ignore, ask, halt)
+* 2 modes of error handling support during event handling (ignore, halt)
+
 ### Usage
 
 ```csharp
