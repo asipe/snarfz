@@ -18,7 +18,7 @@
   <property name="nuget.working.dir" value="${root.dir}\nugetworking" />
 
   <target name="ExecuteTests">
-    <exec program="thirdparty\nunit.runners.2.6.1\tools\${nunit.exe}"
+    <exec program="${nunit.exe}"
           verbose="${verbose}"
           commandline="${debug.dir}\${nunit.test.assembly} /xml=test_results/${nunit.test.assembly}_results.xml /noshadow"
           workingdir="${root.dir}"
@@ -41,9 +41,9 @@
   </target>
 
   <target name="Build.SupaCharge">
-    <exec program="thirdparty\NAnt.Portable.0.92\nant.exe"
+    <exec program="nant.exe"
           workingdir="submodules\supacharge"
-          commandline="Clean Build.All Run.Tests -D:current.framework=net-4.0 -D:lib.dir=${lib.dir} -D:nunit.exe=${root.dir}\thirdparty\nunit.runners.2.6.1\tools\nunit-console.exe -D:verbose=true"
+          commandline="Clean Build.All Run.Tests -D:current.framework=net-4.0 -D:lib.dir=${lib.dir} -D:nunit.exe=${nunit.exe} -D:verbose=true"
           failonerror="true"
           verbose="${verbose}" />
 
@@ -108,7 +108,7 @@
       </fileset>
     </copy>
 
-    <exec program="thirdparty\ilmerge.2.13.0307\ILMerge.exe"
+    <exec program="${src.dir}\packages\ilmerge.2.13.0307\ILMerge.exe"
           verbose="${verbose}"
           commandline="/t:library /out:${merged.deploy.dir}\Snarfz.Core.dll ${raw.deploy.dir}\Snarfz.Core.dll ${raw.deploy.dir}\SupaCharge.Core.dll"
           workingdir="${root.dir}"
@@ -129,7 +129,7 @@
 
   <target name="Init.Lib">
     <copy todir="${lib.dir}" flatten="true" verbose="${verbose}">
-      <fileset basedir="thirdparty">
+      <fileset basedir="${src.dir}\packages">
         <include name="AutoFixture.2.11.0\lib\Ploeh.AutoFixture.dll"/>
         <include name="CompareNETObjects.1.6.0.0\lib\KellermanSoftware.Compare-NET-Objects.dll"/>
         <include name="Moq.3.1.416.3\lib\Moq.dll"/>

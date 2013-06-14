@@ -8,9 +8,9 @@ debug
 test_results
 TestResult.xml
 deploy
-thirdparty
 src/lib/KellermanSoftware.Compare-NET-Objects.dll
 src/lib/Moq.dll
 src/lib/Ploeh.AutoFixture.dll
 src/lib/nunit.framework.dll
 nugetworking
+src/packages/
