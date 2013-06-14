@@ -33,17 +33,12 @@
     <mkdir dir="${test.results.dir}"/> 
 
     <copy todir="${debug.dir}" flatten="true">
-      <fileset basedir="${lib.dir}">
-        <include name="*.*"/>
-      </fileset>
-    </copy>
-
-    <copy todir="${lib.dir}" flatten="true" verbose="${verbose}">
-      <fileset basedir="${src.dir}\packages">
-        <include name="AutoFixture.2.11.0\lib\Ploeh.AutoFixture.dll"/>
-        <include name="CompareNETObjects.1.6.0.0\lib\KellermanSoftware.Compare-NET-Objects.dll"/>
-        <include name="Moq.3.1.416.3\lib\Moq.dll"/>
-        <include name="NUnit.2.6.1\lib\nunit.framework.dll"/>
+      <fileset basedir="${src.dir}">
+        <include name="lib\*.*"/>
+        <include name="packages\AutoFixture.2.11.0\lib\Ploeh.AutoFixture.dll"/>
+        <include name="packages\CompareNETObjects.1.6.0.0\lib\KellermanSoftware.Compare-NET-Objects.dll"/>
+        <include name="packages\Moq.3.1.416.3\lib\Moq.dll"/>
+        <include name="packages\NUnit.2.6.1\lib\nunit.framework.dll"/>
       </fileset>
     </copy>
   </target>
