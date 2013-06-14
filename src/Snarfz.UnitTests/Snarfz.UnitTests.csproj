@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\vsdebug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,40 +33,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.6.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vsdebug\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects">
+      <HintPath>..\packages\CompareNETObjects.1.6.0.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
     </Reference>
-    <Reference Include="Moq, Version=3.1.416.3, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vsdebug\Moq.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.3.1.416.3\lib\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.1.12217, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vsdebug\nunit.framework.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Ploeh.AutoFixture, Version=2.11.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vsdebug\Ploeh.AutoFixture.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.2.11.0\lib\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
-    <Reference Include="Snarfz.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vsdebug\Snarfz.Core.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Ploeh.SemanticComparison">
+      <HintPath>..\packages\AutoFixture.2.11.0\lib\Ploeh.SemanticComparison.dll</HintPath>
     </Reference>
-    <Reference Include="SupaCharge.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vsdebug\SupaCharge.Core.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="SupaCharge.Core">
+      <HintPath>..\lib\SupaCharge.Core.dll</HintPath>
     </Reference>
-    <Reference Include="SupaCharge.Testing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vsdebug\SupaCharge.Testing.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="SupaCharge.Testing">
+      <HintPath>..\lib\SupaCharge.Testing.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,6 +74,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Snarfz.Core\Snarfz.Core.csproj">
+      <Project>{b9021b60-4220-4512-aa83-84bf4bfade43}</Project>
+      <Name>Snarfz.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

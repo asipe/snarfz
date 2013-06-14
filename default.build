@@ -8,7 +8,6 @@
   <property name="debug.dir" value="${root.dir}\debug" readonly="true"/>
   <property name="apps.dir" value="${debug.dir}\apps" readonly="true"/>
   <property name="lib.dir" value="${src.dir}\lib" readonly="true"/>
-  <property name="vsdebug.dir" value="${root.dir}\vsdebug" readonly="true"/>
   <property name="test.results.dir" value="${root.dir}\test_results" readonly="true"/>
   <property name="deploy.dir" value="${root.dir}\deploy" readonly="true"/>
   <property name="nunit.test.assembly" value=""/>
@@ -36,6 +35,15 @@
     <copy todir="${debug.dir}" flatten="true">
       <fileset basedir="${lib.dir}">
         <include name="*.*"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${lib.dir}" flatten="true" verbose="${verbose}">
+      <fileset basedir="${src.dir}\packages">
+        <include name="AutoFixture.2.11.0\lib\Ploeh.AutoFixture.dll"/>
+        <include name="CompareNETObjects.1.6.0.0\lib\KellermanSoftware.Compare-NET-Objects.dll"/>
+        <include name="Moq.3.1.416.3\lib\Moq.dll"/>
+        <include name="NUnit.2.6.1\lib\nunit.framework.dll"/>
       </fileset>
     </copy>
   </target>
@@ -126,25 +134,4 @@
           workingdir="${root.dir}"
           failonerror="true"/>
   </target>
-
-  <target name="Init.Lib">
-    <copy todir="${lib.dir}" flatten="true" verbose="${verbose}">
-      <fileset basedir="${src.dir}\packages">
-        <include name="AutoFixture.2.11.0\lib\Ploeh.AutoFixture.dll"/>
-        <include name="CompareNETObjects.1.6.0.0\lib\KellermanSoftware.Compare-NET-Objects.dll"/>
-        <include name="Moq.3.1.416.3\lib\Moq.dll"/>
-        <include name="NUnit.2.6.1\lib\nunit.framework.dll"/>
-      </fileset>
-    </copy>
-  </target>
-
-  <target name="Init.VSDebug" depends="Init.Lib">
-    <mkdir dir="${vsdebug.dir}" verbose="${verbose}"/>
-    <copy todir="${vsdebug.dir}" verbose="${verbose}">
-      <fileset basedir="${lib.dir}">
-        <include name="*.dll"/>
-        <include name="*.pdb"/>
-      </fileset>
-    </copy>
-  </target>  
 </project>
