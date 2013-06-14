@@ -47,11 +47,10 @@ install via package manager:  Install-Package Snarfz
 2. open a powershell command prompt
 3. navigate to the root of the snarfz clone 
 4. run scipts\bootstrap.ps1 
-5. run nant Clean Cycle Deploy
-6. a raw deployment can be found in deploy\raw
-7. an ilmerged deployment (single assembly) can be found in deploy\merged
+5. a raw deployment can be found in deploy\raw
+6. an ilmerged deployment (single assembly) can be found in deploy\merged
 
-After step 4 you can also build via the solution.
+After step 1 you can also build via the solution
 
 ### License
 
