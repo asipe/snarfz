@@ -14,3 +14,4 @@ src/lib/Ploeh.AutoFixture.dll
 src/lib/nunit.framework.dll
 nugetworking
 src/packages/
+src/Snarfz.Samples/packages/
