@@ -6,7 +6,7 @@ using System.Linq;
 using SupaCharge.Core.IOAbstractions;
 
 namespace Snarfz.Core {
-  public class Scanner {
+  public class Scanner : IScanner {
     public Scanner(IDirectory directory, IScanErrorHandler scanErrorHandler, IEventErrorHandler eventErrorHandler) {
       mDirectory = directory;
       mScanErrorHandler = scanErrorHandler;

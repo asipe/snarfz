@@ -53,6 +53,7 @@
     <Compile Include="FileVisitEventArgs.cs" />
     <Compile Include="IEventErrorHandler.cs" />
     <Compile Include="IScanErrorHandler.cs" />
+    <Compile Include="IScanner.cs" />
     <Compile Include="ScanErrorHandler.cs" />
     <Compile Include="EventHandlers.cs" />
     <Compile Include="DirectoryVisitEventArgs.cs" />
