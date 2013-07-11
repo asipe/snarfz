@@ -1,6 +1,6 @@
-src\.nuget\NuGet.exe install src\.nuget\packages.config -OutputDirectory src\packages
-src\.nuget\NuGet.exe install src\Snarfz.UnitTests\packages.config -OutputDirectory src\packages
+thirdparty\nuget\NuGet.exe install src\Snarfz.Nuget.Packages\common\packages.config -OutputDirectory thirdparty\packages\common -ExcludeVersion
+thirdparty\nuget\NuGet.exe install src\Snarfz.Nuget.Packages\net-4.0\packages.config -OutputDirectory thirdparty\packages\net-4.0 -ExcludeVersion
 
-$env:PATH += ";.\src\packages\NAnt.Portable.0.92\;.\src\packages\NUnit.Runners.2.6.1\tools"
+$env:PATH += ";.\thirdparty\packages\common\NAnt.Portable\;.\thirdparty\packages\common\NUnit.Runners\tools"
 
-nant Clean Cycle Deploy
+#nant Clean Cycle Deploy

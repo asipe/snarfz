@@ -1,25 +1,24 @@
 <?xml version="1.0"?>
 <!-- Copyright (c) Andy Sipe. All rights reserved. Licensed under the MIT License (MIT). See License.txt in the project root for license information. -->
 <project name="Build" basedir=".">
-  <property name="nant.settings.currentframework" value="net-4.0"/>
+  <property name="current.framework" value="net-4.0" overwrite="false"/>
+  <property name="nant.settings.currentframework" value="${current.framework}"/>
   <property name="debug.status" value="Full"/>
   <property name="root.dir" value="${project::get-base-directory()}" readonly="true"/>
   <property name="src.dir" value="${root.dir}\src" readonly="true"/>
   <property name="debug.dir" value="${root.dir}\debug" readonly="true"/>
   <property name="apps.dir" value="${debug.dir}\apps" readonly="true"/>
-  <property name="lib.dir" value="${src.dir}\lib" readonly="true"/>
   <property name="test.results.dir" value="${root.dir}\test_results" readonly="true"/>
   <property name="deploy.dir" value="${root.dir}\deploy" readonly="true"/>
   <property name="nunit.test.assembly" value=""/>
   <property name="nunit.exe" value="nunit-console.exe"/>
   <property name="verbose" value="false" overwrite="false"/>
-  <property name="nuget.spec.dir" value="${root.dir}\nugetspec" />
   <property name="nuget.working.dir" value="${root.dir}\nugetworking" />
 
   <target name="ExecuteTests">
     <exec program="${nunit.exe}"
           verbose="${verbose}"
-          commandline="${debug.dir}\${nunit.test.assembly} /xml=test_results/${nunit.test.assembly}_results.xml /noshadow"
+          commandline="${debug.dir}\${current.framework}\${nunit.test.assembly} /xml=test_results/${nunit.test.assembly}_results.xml /noshadow"
           workingdir="${root.dir}"
           failonerror="true"/>
   </target>
@@ -32,50 +31,37 @@
     <delete dir="${test.results.dir}"/>
     <mkdir dir="${test.results.dir}"/> 
 
-    <copy todir="${debug.dir}" flatten="true">
-      <fileset basedir="${src.dir}">
-        <include name="lib\*.*"/>
-        <include name="packages\AutoFixture.2.11.0\lib\Ploeh.AutoFixture.dll"/>
-        <include name="packages\CompareNETObjects.1.6.0.0\lib\KellermanSoftware.Compare-NET-Objects.dll"/>
-        <include name="packages\Moq.3.1.416.3\lib\Moq.dll"/>
-        <include name="packages\NUnit.2.6.1\lib\nunit.framework.dll"/>
-      </fileset>
-    </copy>
-  </target>
-
-  <target name="Build.SupaCharge">
-    <exec program="nant.exe"
-          workingdir="submodules\supacharge"
-          commandline="Clean Build.All Run.Tests -D:current.framework=net-4.0 -D:lib.dir=${lib.dir} -D:nunit.exe=${nunit.exe} -D:verbose=true"
-          failonerror="true"
-          verbose="${verbose}" />
-
-    <copy todir="${lib.dir}" flatten="true" verbose="${verbose}">
-      <fileset basedir="submodules\supacharge\debug\">
-        <include name="SupaCharge*.dll"/>
+    <copy todir="${debug.dir}\${current.framework}" flatten="true">
+      <fileset basedir="${root.dir}">
+        <include name="thirdparty\packages\net-4.0\AutoFixture\lib\net40\Ploeh.AutoFixture.dll"/>
+        <include name="thirdparty\packages\net-4.0\CompareNETObjects\lib\KellermanSoftware.Compare-NET-Objects.dll"/>
+        <include name="thirdparty\packages\net-4.0\Moq\lib\net40\Moq.dll"/>
+        <include name="thirdparty\packages\net-4.0\NUnit\lib\nunit.framework.dll"/>
+        <include name="thirdparty\packages\net-4.0\SupaCharge.Core\lib\net40\supacharge.core.dll"/>
+        <include name="thirdparty\packages\net-4.0\SupaCharge.Testing\lib\net40\supacharge.testing.dll"/>
       </fileset>
     </copy>
   </target>
 
   <target name="Build.Snarfz.Core">
-    <csc debug="${debug.status}" target="library" output="${debug.dir}\Snarfz.Core.dll" warnaserror="true">
+    <csc debug="${debug.status}" target="library" output="${debug.dir}\${current.framework}\Snarfz.Core.dll" warnaserror="true">
       <sources basedir="${src.dir}">
         <include name="Snarfz.Core\**\*.cs"/>
         <include name="Properties\*.cs"/>
       </sources>
-      <references basedir="${debug.dir}">
+      <references basedir="${debug.dir}\${current.framework}">
         <include name="SupaCharge.Core.dll"/>
       </references>
     </csc>
   </target>
 
   <target name="Build.Snarfz.UnitTests">
-    <csc debug="${debug.status}" target="library" output="${debug.dir}\Snarfz.UnitTests.dll" warnaserror="true">
+    <csc debug="${debug.status}" target="library" output="${debug.dir}\${current.framework}\Snarfz.UnitTests.dll" warnaserror="true">
       <sources basedir="${src.dir}">
         <include name="Snarfz.UnitTests\**\*.cs"/>
         <include name="Properties\*.cs"/>
       </sources>
-      <references basedir="${debug.dir}" >
+      <references basedir="${debug.dir}\${current.framework}" >
         <include name="Nunit.Framework.dll"/>
         <include name="Moq.dll"/>
         <include name="Ploeh.AutoFixture.dll"/>
@@ -98,20 +84,19 @@
   <target name="Cycle" depends ="Build.All, Run.UnitTests"/>
 
   <target name="Deploy" depends ="Build.All">
-    <property name="raw.deploy.dir" value="${deploy.dir}\raw"/>
-    <property name="merged.deploy.dir" value="${deploy.dir}\merged"/>
-    <mkdir dir="${deploy.dir}" verbose="${verbose}"/>
+    <property name="raw.deploy.dir" value="${deploy.dir}\${current.framework}\raw"/>
+    <property name="merged.deploy.dir" value="${deploy.dir}\${current.framework}\merged"/>
     <mkdir dir="${raw.deploy.dir}" verbose="${verbose}"/>
     <mkdir dir="${merged.deploy.dir}" verbose="${verbose}"/>
     
     <copy todir="${raw.deploy.dir}" verbose="${verbose}">
-      <fileset basedir="${debug.dir}">
+      <fileset basedir="${debug.dir}\${current.framework}">
         <include name="snarfz.core.*"/>
         <include name="supacharge.core.*"/>
       </fileset>
     </copy>
 
-    <exec program="${src.dir}\packages\ilmerge.2.13.0307\ILMerge.exe"
+    <exec program="${root.dir}\thirdparty\packages\common\ilmerge\ILMerge.exe"
           verbose="${verbose}"
           commandline="/t:library /out:${merged.deploy.dir}\Snarfz.Core.dll ${raw.deploy.dir}\Snarfz.Core.dll ${raw.deploy.dir}\SupaCharge.Core.dll"
           workingdir="${root.dir}"
@@ -120,10 +105,10 @@
 
   <target name="Build.NugetPackage" depends="Clean Cycle Deploy">
     <delete dir="${nuget.working.dir}" verbose="${verbose}" />
-    <copy todir="${nuget.working.dir}\lib\net40" file="${deploy.dir}\merged\Snarfz.Core.dll" verbose="${verbose}"/>
-    <copy todir="${nuget.working.dir}" file="${nuget.spec.dir}\Snarfz.Core.dll.nuspec" verbose="${verbose}"/>
+    <copy todir="${nuget.working.dir}\lib\net40" file="${deploy.dir}\${current.framework}\merged\Snarfz.Core.dll" verbose="${verbose}"/>
+    <copy todir="${nuget.working.dir}" file="${src.dir}\Snarfz.Nuget.Specs\Snarfz.Core.dll.nuspec" verbose="${verbose}"/>
     
-    <exec program="src\.nuget\nuget.exe"
+    <exec program="${root.dir}\thirdparty\nuget\nuget.exe"
           verbose="${verbose}"
           commandline="pack ${nuget.working.dir}\Snarfz.Core.dll.nuspec -OutputDirectory ${nuget.working.dir}"
           workingdir="${root.dir}"
