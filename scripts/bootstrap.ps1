@@ -3,4 +3,4 @@ thirdparty\nuget\NuGet.exe install src\Snarfz.Nuget.Packages\net-4.0\packages.co
 
 $env:PATH += ";.\thirdparty\packages\common\NAnt.Portable\;.\thirdparty\packages\common\NUnit.Runners\tools"
 
-#nant Clean Cycle Deploy
+nant Clean Cycle Deploy
