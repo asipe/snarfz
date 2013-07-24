@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 
   <PropertyGroup>
-    <ProjectGuid>{79649E83-3599-478D-9B9A-26CC15860686}</ProjectGuid>
+    <ProjectGuid>{C3DB961D-420F-4D95-BA47-4397DB80FA53}</ProjectGuid>
     <RootNamespace>Snarfz.UnitTests</RootNamespace>
     <AssemblyName>Snarfz.UnitTests</AssemblyName>
   </PropertyGroup>
@@ -13,9 +13,6 @@
 
   <ItemGroup>
     <Reference Include="System" />
-    <!--<Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />-->
     <Reference Include="$(DebugDir)\Snarfz.Core\snarfz.core.dll" />
   </ItemGroup>
 
@@ -34,11 +31,14 @@
     <Reference Include="$(PackagesDir)\comparenetobjects\lib\kellermansoftware.compare-nET-objects.dll" />
   </ItemGroup>
   
-  <!--<ItemGroup Condition="'$(FrameworkVersion)' == 'v4.5'">
+ <ItemGroup Condition="'$(FrameworkVersion)' == 'v4.5'">
+    <Reference Include="$(PackagesDir)\supacharge.core\lib\net45\supacharge.core.dll" />
+    <Reference Include="$(PackagesDir)\supacharge.testing\lib\net45\supacharge.testing.dll" />
     <Reference Include="$(PackagesDir)\moq\lib\net40\moq.dll" />
     <Reference Include="$(PackagesDir)\nunit\lib\nunit.framework.dll" />
     <Reference Include="$(PackagesDir)\autofixture\lib\net40\ploeh.autofixture.dll" />
-  </ItemGroup>-->
+    <Reference Include="$(PackagesDir)\comparenetobjects\lib\kellermansoftware.compare-nET-objects.dll" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(SrcDir)\Snarfz.UnitTests\**\*.cs"/>

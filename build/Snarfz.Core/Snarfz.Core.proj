@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 
   <PropertyGroup>
-    <ProjectGuid>{DBBD21C6-898C-4F93-8FA9-B7D99FD383C0}</ProjectGuid>
+    <ProjectGuid>{B9021B60-4220-4512-AA83-84BF4BFADE43}</ProjectGuid>
     <RootNamespace>Snarfz.Core</RootNamespace>
     <AssemblyName>Snarfz.Core</AssemblyName>
   </PropertyGroup>
@@ -27,10 +27,10 @@
     <Reference Include="$(PackagesDir)\supacharge.core\lib\net40\supacharge.core.dll" />
   </ItemGroup>
   
-  <!--<ItemGroup Condition="'$(FrameworkVersion)' == 'v4.5'">
+  <ItemGroup Condition="'$(FrameworkVersion)' == 'v4.5'">
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="$(PackagesDir)\supacharge.core\lib\net45\supacharge.core.dll" />
-  </ItemGroup>-->
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(SrcDir)\Snarfz.Core\**\*.cs"/>
