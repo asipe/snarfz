@@ -10,6 +10,7 @@
     <Message Text="PackagesDir: $(PackagesDir)"/>
     <Message Text="BaseIntermediaryOutputPath: $(BaseIntermediaryOutputPath)"/>
     <Message Text="IntermediateOutputPath: $(IntermediateOutputPath)"/>
+    <Message Text="Binaries: @(Binaries)"/>
   </Target>
 
   <Target Name="ValidateFrameworkVersion">
