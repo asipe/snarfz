@@ -46,11 +46,11 @@ install via package manager:  Install-Package Snarfz
 1. clone the snarfz repository
 2. open a powershell command prompt
 3. navigate to the root of the snarfz clone 
-4. run scipts\bootstrap.ps1 
-5. a raw deployment can be found in deploy\raw
-6. an ilmerged deployment (single assembly) can be found in deploy\merged
+4. run scripts\bootstrap.ps1 
+5. run scripts\build.ps1
+6. run scripts\rununittests.ps1
 
-After step 1 you can also build via the solution
+After step 4 you can also build via the solution.
 
 ### License
 
