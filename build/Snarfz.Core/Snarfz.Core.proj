@@ -18,9 +18,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
 
-  <!--<ItemGroup Condition="'$(FrameworkVersion)' == 'v3.5'">
+  <ItemGroup Condition="'$(FrameworkVersion)' == 'v3.5'">
     <Reference Include="$(PackagesDir)\supacharge.core\lib\net35\supacharge.core.dll" />
-  </ItemGroup>-->
+  </ItemGroup>
 
   <ItemGroup Condition="'$(FrameworkVersion)' == 'v4.0'">
     <Reference Include="Microsoft.CSharp" />
