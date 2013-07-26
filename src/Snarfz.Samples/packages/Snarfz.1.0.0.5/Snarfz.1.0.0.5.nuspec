@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Snarfz</id>
-    <version>1.0.0.4</version>
+    <version>1.0.0.5</version>
     <authors>asipe</authors>
     <owners>asipe</owners>
     <licenseUrl>https://github.com/asipe/snarfz/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/asipe/snarfz</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Micro framework for enumerating a file system</description>
-    <releaseNotes>Additional clean up surrounding building and dependencies</releaseNotes>
+    <releaseNotes>Added 3.5 and 4.5 framework version support</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>file directory filesystem scan</tags>
   </metadata>
