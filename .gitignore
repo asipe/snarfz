@@ -10,3 +10,4 @@ TestResult.xml
 deploy
 nugetworking
 thirdparty/packages
+src/Snarfz.Samples/packages/Snarfz*
