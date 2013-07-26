@@ -7,9 +7,7 @@ function CheckLastExitCode() {
 }
 
 $times = Measure-Command {
-  powershell .\build\clean.ps1
-
-  C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe .\build\Snarfz.proj /ds /maxcpucount:4 | Write-Host
+  C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe .\src\Snarfz.Build\Snarfz.proj /ds /maxcpucount:4 | Write-Host
   CheckLastExitCode
 }
 
