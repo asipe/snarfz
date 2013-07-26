@@ -10,10 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Snarfz.UnitTests</RootNamespace>
     <AssemblyName>Snarfz.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,31 +33,32 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.6.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\thirdparty\packages\net-4.0\CompareNETObjects\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+      <HintPath>..\..\thirdparty\packages\net-4.5\CompareNETObjects\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
     </Reference>
-    <Reference Include="Moq, Version=3.1.416.3, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\thirdparty\packages\net-4.0\Moq\lib\NET40\Moq.dll</HintPath>
+      <HintPath>..\..\thirdparty\packages\net-4.5\Moq\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.1.12217, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\thirdparty\packages\net-4.0\NUnit\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\..\thirdparty\packages\net-4.5\NUnit\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Ploeh.AutoFixture, Version=2.11.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+    <Reference Include="Ploeh.AutoFixture, Version=3.5.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\thirdparty\packages\net-4.0\AutoFixture\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <HintPath>..\..\thirdparty\packages\net-4.5\AutoFixture\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
-    <Reference Include="SupaCharge.Core, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="supacharge.core, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\thirdparty\packages\net-4.0\SupaCharge.Core\lib\net40\SupaCharge.Core.dll</HintPath>
+      <HintPath>..\..\thirdparty\packages\net-4.5\SupaCharge.Core\lib\net45\supacharge.core.dll</HintPath>
     </Reference>
-    <Reference Include="SupaCharge.Testing, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="supacharge.testing, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\thirdparty\packages\net-4.0\SupaCharge.Testing\lib\net40\SupaCharge.Testing.dll</HintPath>
+      <HintPath>..\..\thirdparty\packages\net-4.5\SupaCharge.Testing\lib\net45\supacharge.testing.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
