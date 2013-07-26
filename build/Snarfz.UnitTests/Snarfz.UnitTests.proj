@@ -5,7 +5,7 @@
   <PropertyGroup>
     <ProjectGuid>{C3DB961D-420F-4D95-BA47-4397DB80FA53}</ProjectGuid>
     <RootNamespace>Snarfz.UnitTests</RootNamespace>
-    <AssemblyName>Snarfz.UnitTests</AssemblyName>
+    <AssemblyName>snarfz.unittests</AssemblyName>
   </PropertyGroup>
 
   <Import Project="..\Snarfz.props" />
@@ -22,7 +22,7 @@
     <Reference Include="$(PackagesDir)\moq\lib\moq.dll" />
     <Reference Include="$(PackagesDir)\nunit\lib\nunit.framework.dll" />
     <Reference Include="$(PackagesDir)\autofixture\lib\ploeh.autofixture.dll" />
-    <Reference Include="$(PackagesDir)\comparenetobjects\lib\kellermansoftware.compare-nET-objects.dll" />
+    <Reference Include="$(PackagesDir)\comparenetobjects\lib\kellermansoftware.compare-net-objects.dll" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(FrameworkVersion)' == 'v4.0'">
@@ -31,7 +31,7 @@
     <Reference Include="$(PackagesDir)\moq\lib\net40\moq.dll" />
     <Reference Include="$(PackagesDir)\nunit\lib\nunit.framework.dll" />
     <Reference Include="$(PackagesDir)\autofixture\lib\net40\ploeh.autofixture.dll" />
-    <Reference Include="$(PackagesDir)\comparenetobjects\lib\kellermansoftware.compare-nET-objects.dll" />
+    <Reference Include="$(PackagesDir)\comparenetobjects\lib\kellermansoftware.compare-net-objects.dll" />
   </ItemGroup>
   
  <ItemGroup Condition="'$(FrameworkVersion)' == 'v4.5'">
@@ -40,7 +40,7 @@
     <Reference Include="$(PackagesDir)\moq\lib\net40\moq.dll" />
     <Reference Include="$(PackagesDir)\nunit\lib\nunit.framework.dll" />
     <Reference Include="$(PackagesDir)\autofixture\lib\net40\ploeh.autofixture.dll" />
-    <Reference Include="$(PackagesDir)\comparenetobjects\lib\kellermansoftware.compare-nET-objects.dll" />
+    <Reference Include="$(PackagesDir)\comparenetobjects\lib\kellermansoftware.compare-net-objects.dll" />
   </ItemGroup>
 
   <ItemGroup>

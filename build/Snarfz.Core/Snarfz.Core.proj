@@ -4,8 +4,8 @@
 
   <PropertyGroup>
     <ProjectGuid>{B9021B60-4220-4512-AA83-84BF4BFADE43}</ProjectGuid>
-    <RootNamespace>Snarfz.Core</RootNamespace>
-    <AssemblyName>Snarfz.Core</AssemblyName>
+    <RootNamespace>snarfz.core</RootNamespace>
+    <AssemblyName>snarfz.core</AssemblyName>
   </PropertyGroup>
 
   <Import Project="..\Snarfz.props" />
