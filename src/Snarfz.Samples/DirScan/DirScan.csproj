@@ -39,8 +39,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="snarfz.core">
-      <HintPath>..\packages\Snarfz.1.0.0.5\lib\net45\snarfz.core.dll</HintPath>
+    <Reference Include="snarfz.core, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Snarfz.1.0.0.6\lib\net45\snarfz.core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
