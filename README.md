@@ -31,7 +31,7 @@ namespace SimpleScan {
 
 snarfz/src/Snarfz.Samples/ contains a solution with several sample projects
 
-* SimpleScan is a console application which will scan your C:\ drive and ehco the path of all files and diretories to the console ignoring all errors.
+* SimpleScan is a console application which will scan your C:\ drive and echo the path of all files and diretories to the console ignoring all errors.
 * EmptyDirectoryScanner is a console applicaiton which will scan a given directory (provided on the command line) and list all the directories that are empty (no files and no sub directories).  It will halt on any error.
 * DirScan is a console application which allows most options of Snarfz to be configured and toyed with
 
